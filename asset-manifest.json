@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/tsl-training/static/css/main.a447046c.css",
-    "main.js": "/tsl-training/static/js/main.5f2ca02c.js",
+    "main.js": "/tsl-training/static/js/main.9e47935a.js",
     "static/js/787.e8f9fb10.chunk.js": "/tsl-training/static/js/787.e8f9fb10.chunk.js",
     "static/media/HomepageBackground.jpg": "/tsl-training/static/media/HomepageBackground.ff44607943c34107494a.jpg",
     "index.html": "/tsl-training/index.html",
     "main.a447046c.css.map": "/tsl-training/static/css/main.a447046c.css.map",
-    "main.5f2ca02c.js.map": "/tsl-training/static/js/main.5f2ca02c.js.map",
+    "main.9e47935a.js.map": "/tsl-training/static/js/main.9e47935a.js.map",
     "787.e8f9fb10.chunk.js.map": "/tsl-training/static/js/787.e8f9fb10.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a447046c.css",
-    "static/js/main.5f2ca02c.js"
+    "static/js/main.9e47935a.js"
   ]
 }
