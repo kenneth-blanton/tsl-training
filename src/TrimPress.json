@@ -1,0 +1,9 @@
+[
+    {
+        "id": 1,
+        "header": "",
+        "status": true,
+        "tab": ["Bottom Angle Closing", "Before Form Ends"],
+        "tabValue": [50, 0.35]
+    }
+]

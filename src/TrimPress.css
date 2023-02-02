@@ -1,0 +1,50 @@
+.trimPress {
+    display: flex;
+    justify-content: space-evenly;
+    height: 100%;
+    position: relative;
+}
+
+.leftColumn, .middleColumn, .rightColumn {
+    width: 100%;
+    border: 1px solid black;
+    color: black;
+}
+
+.settings {
+    margin: .1em;
+    padding: .1em;
+    background-color: rgb(6, 122, 238);
+    display: flex;
+    border: 1px solid rgb(6, 122, 238);
+}
+
+.onOff {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5em;
+    width: 5em;
+    border: 8px ridge white;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    cursor: pointer;
+    border-spacing: 2px;
+}
+
+th {
+    text-align: justify;
+    background-color: white;
+}
+
+td {
+    background-color: white;
+}
+
+td:last-child {
+    width: 20%;
+    text-align: right;
+}

@@ -1,0 +1,183 @@
+.Navbar {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(6, 122, 238);
+    bottom: 0;
+    width: 100%;
+}
+
+.major {
+    width: 100%;
+}
+
+.Navbar a {
+    width: 100%;
+    margin: 0 1.5px;
+    color: black;
+    text-decoration: none;
+}
+
+.routeWrapper {
+    border-top: 1px solid white;
+    padding-top: .1em;
+    margin: 1.8em .5em 0em;
+    display: flex;
+}
+
+.route {
+    border-style: solid;
+    border-color: white black black white;
+    background-color: lightgrey;
+    height: 4em;
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+
+.condition {
+    background-color: red;
+    color: white;
+    border: 1px outset white;
+    position: absolute;
+    top: -1.8em;
+    left: 1.6em;
+    height: 1.18em;
+    width: 11em;
+}
+
+.status {
+    height: 1em;
+    width: 1em;
+    background-color: red;
+    border: 1px solid black;
+    border-radius: 1em;
+    position: absolute;
+    bottom: 0.1em;
+    right: 0.1em;
+}
+
+.relays {
+    display: flex;
+}
+
+.formStatus {
+    position: relative;
+    color: white;
+    margin-top: .2em;
+    margin-left: 17.6em;
+    padding-left: 1.5em;
+    font-size: 14px;
+}
+
+.formStatus > .status {
+    left: 0em;
+}
+
+.tpStatus {
+    position: relative;
+    color: white;
+    font-size: 14px;
+    margin-top: .2em;
+    margin-left: 24.2em;
+    padding-left: 1.5em;
+}
+
+.tpStatus > .status {
+    left: 0;
+}
+
+.brakeIras {
+    display: flex;
+}
+
+.brakeStatus {
+    position: relative;
+    padding-left: 16.5em;
+    padding-top: 2em;
+    color: white;
+}
+
+.brakeStatus > .status {
+    position: absolute;
+    background-color: lightgreen;
+    bottom: 0;
+    left: 14.8em;
+}
+
+.irasStatus {
+    position: relative;
+    padding-left: 6.5em;
+    padding-top: 2em;
+    color: white;
+}
+
+.irasStatus > .status {
+    background-color: yellow;
+    position: absolute;
+    left: 5em;
+}
+
+/* Sidebar */
+
+.sidebar {
+    width: 20%;
+}
+
+.clock {
+    margin-top: .2em;
+    height: 1.5em;
+    background-color: black;
+    display: flex;
+    border: 2px solid white;
+    width: 98%;
+    justify-content: center;
+    align-items: center;
+    color: greenyellow;
+}
+
+.help-print {
+    width: 99%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.help {
+    position: relative;
+    margin-top: .5em;
+    background-color: rgb(235, 235, 235);
+    height: 2.5em;
+    width: 100%;
+    border: 1px outset gray;
+}
+
+.book {
+    position: absolute;
+    bottom: .2em;
+    right: .2em;
+}
+
+.print {
+    position: relative;
+    margin-top: .5em;
+    background-color: rgb(235, 235, 235);
+    height: 2.5em;
+    width: 100%;
+    border: 1px outset gray;
+}
+
+.printer {
+    position: absolute;
+    bottom: .2em;
+    right: .2em;
+}
+
+fieldset {
+    color: white;
+    border-color: white;
+    max-width: 95%;
+}
+
+.fieldTime {
+    color: yellow;
+}
