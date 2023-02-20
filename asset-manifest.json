@@ -1,16 +1,15 @@
 {
   "files": {
-    "main.css": "/tsl-training/static/css/main.a447046c.css",
-    "main.js": "/tsl-training/static/js/main.9e47935a.js",
-    "static/js/787.e8f9fb10.chunk.js": "/tsl-training/static/js/787.e8f9fb10.chunk.js",
+    "main.css": "/tsl-training/static/css/main.502452bd.css",
+    "main.js": "/tsl-training/static/js/main.62148446.js",
     "static/media/HomepageBackground.jpg": "/tsl-training/static/media/HomepageBackground.ff44607943c34107494a.jpg",
+    "static/media/PactiveVideoPoster.png": "/tsl-training/static/media/PactiveVideoPoster.00799dae62e56acb20a1.png",
     "index.html": "/tsl-training/index.html",
-    "main.a447046c.css.map": "/tsl-training/static/css/main.a447046c.css.map",
-    "main.9e47935a.js.map": "/tsl-training/static/js/main.9e47935a.js.map",
-    "787.e8f9fb10.chunk.js.map": "/tsl-training/static/js/787.e8f9fb10.chunk.js.map"
+    "main.502452bd.css.map": "/tsl-training/static/css/main.502452bd.css.map",
+    "main.62148446.js.map": "/tsl-training/static/js/main.62148446.js.map"
   },
   "entrypoints": [
-    "static/css/main.a447046c.css",
-    "static/js/main.9e47935a.js"
+    "static/css/main.502452bd.css",
+    "static/js/main.62148446.js"
   ]
 }
