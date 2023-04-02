@@ -1,0 +1,9 @@
+.LandingPage {
+  display: flex;
+  background-color: rgb(37, 60, 143);
+}
+
+.login {
+  width: 100%;
+  background-color: aqua;
+}

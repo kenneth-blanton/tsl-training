@@ -11,7 +11,7 @@ const Navbar = () => {
     <div className="Navbar">
       <div className="major">
         <div className="routeWrapper">
-          <Link to="/">
+          <Link to="/tsl-training/">
             <div className="route">
               <h3>Main</h3>
             </div>
