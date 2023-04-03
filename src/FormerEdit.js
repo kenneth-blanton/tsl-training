@@ -11,14 +11,9 @@ const FormerEdit = (props) => {
             </tr>
           </thead>
           <tbody>
-            {props.intTabs.map((info, i) => {
-              return (
-                <tr>
-                  <td>{info}</td>
-                  <td>{props.intVals[i]}</td>
-                </tr>
-              );
-            })}
+            <tr>
+              <td style={{ textAlign: "center" }}>Information Goes Here</td>
+            </tr>
           </tbody>
         </table>
       </div>

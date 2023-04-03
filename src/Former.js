@@ -2,6 +2,7 @@ import "./Former.css";
 import data from "./FormerTables.json";
 import FormerTables from "./FormerTables";
 import { useState } from "react";
+import Navbar from "./Navbar";
 
 const Former = () => {
   const [info, setInfo] = useState(data);
@@ -101,6 +102,7 @@ const Former = () => {
           );
         })}
       </div>
+      <Navbar></Navbar>
     </div>
   );
 };

@@ -1,32 +1,23 @@
-import './TrimPress.css';
+import "./TrimPress.css";
+import Navbar from "./Navbar";
 
 const TrimPress = () => {
+  return (
+    <div className="trimPress">
+      <div className="leftColumn">
+        <p>Tables go here</p>
+      </div>
 
-    return ( 
-        <div className="trimPress">
+      <div className="middleColumn">
+        <p>Status goes here</p>
+      </div>
 
+      <div className="rightColumn">
+        <p>Tables go here</p>
+      </div>
+      <Navbar></Navbar>
+    </div>
+  );
+};
 
-
-            <div className="leftColumn">
-                <p>Swag</p>
-            </div>
-
-
-
-            <div className="middleColumn">
-                <p>Surf</p>
-            </div>
-
-
-
-            <div className="rightColumn">
-                <p>Now watch me surf the swag</p>
-            </div>
-
-
-
-        </div>
-     );
-}
- 
 export default TrimPress;

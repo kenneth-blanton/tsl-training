@@ -11,7 +11,7 @@ const Navbar = () => {
     <div className="Navbar">
       <div className="major">
         <div className="routeWrapper">
-          <Link to="/tsl-training/">
+          <Link to="/home">
             <div className="route">
               <h3>Main</h3>
             </div>
@@ -22,7 +22,7 @@ const Navbar = () => {
               <div className="status"></div>
             </div>
           </Link>
-          <Link to="/former">
+          <Link to="/former" disabled>
             <div className="route heat">
               <h3>Heat</h3>
               <div className="status"></div>
@@ -72,10 +72,10 @@ const Navbar = () => {
         </div>
 
         <div className="help-print">
-          <div className="help">
+          <Link to="/tsl-training/" className="help">
             Help
             <FontAwesomeIcon className="book" icon={faBook} />
-          </div>
+          </Link>
 
           <div className="print">
             Print
