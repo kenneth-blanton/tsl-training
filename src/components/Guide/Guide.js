@@ -1,12 +1,12 @@
-import "../styles/Introduction.css";
+import "../../styles/Guide.css";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import LineData from "../data/LineInfo.json";
-import logo from "../images/PactiveVideoPoster.png";
+import LineData from "../../data/LineInfo.json";
+import logo from "../../images/PactiveVideoPoster.png";
 import Carousel from "./Carousel";
 import uuid from "react-uuid";
 
-const Introduction = () => {
+const Guide = () => {
   const [opt, setOpt] = useState(LineData[0]); // Holds which key in JSON data is selected
   const [sec, setSec] = useState(opt?.info);
 
@@ -29,6 +29,14 @@ const Introduction = () => {
     return se;
   });
 
+  function signOut() {
+    window.sessionStorage.setItem("Account ID", undefined);
+    window.sessionStorage.setItem("Account First Name", undefined);
+    window.sessionStorage.setItem("Account Last Name", undefined);
+    window.sessionStorage.setItem("Account Password", undefined);
+    window.sessionStorage.setItem("Account Position", undefined);
+  }
+
   useEffect(() => {
     setOpt(opt); // Default value when page is loaded and changes whenever there is a new option selected
     setSec(opt?.info);
@@ -47,11 +55,13 @@ const Introduction = () => {
           </a>
         </div>
         <div className="links">
-          <Link to="/">Sign-Out</Link>
+          <Link to="/" onClick={signOut}>
+            Sign-Out
+          </Link>
           <Link to="/tests">Test</Link>
         </div>
       </div>
-      <div className="Introduction">
+      <div className="Guide">
         <div id="majorSelect">
           <label>Line: &nbsp;</label>
           <select onChange={handleChange} value={opt?.id}>
@@ -102,11 +112,11 @@ const Introduction = () => {
             </div>
           </>
         ) : (
-          "bye"
+          "No info"
         )}
       </div>
     </>
   );
 };
 
-export default Introduction;
+export default Guide;

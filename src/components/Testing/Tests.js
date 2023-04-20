@@ -1,11 +1,21 @@
-import logo from "../images/PactiveVideoPoster.png";
+import logo from "../../images/PactiveVideoPoster.png";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { db } from "../data/firebase";
-import "../styles/Tests.css";
+import { db } from "../../data/firebase";
+import "../../styles/Tests.css";
 import TestListing from "./TestListing";
 
 const Tests = () => {
+  function signOut() {
+    window.sessionStorage.setItem("Account ID", undefined);
+    window.sessionStorage.setItem("Account First Name", undefined);
+    window.sessionStorage.setItem("Account Last Name", undefined);
+    window.sessionStorage.setItem("Account Password", undefined);
+    window.sessionStorage.setItem("Account Position", undefined);
+  }
+
+  const [admin, setAdmin] = useState("");
+
   const [queryState, setQueryState] = useState({
     isLoading: true,
     errorMessage: "",
@@ -13,7 +23,7 @@ const Tests = () => {
   });
 
   useEffect(() => {
-    async function getAllUsers() {
+    async function getAllTests() {
       try {
         setQueryState({
           isLoading: true,
@@ -37,7 +47,11 @@ const Tests = () => {
       }
     }
 
-    getAllUsers();
+    if (window.sessionStorage.getItem("Account Password") == 246802) {
+      setAdmin(<Link to="/create">Admin</Link>);
+    }
+
+    getAllTests();
   }, []);
 
   const { isLoading, errorMessage, docSnapshots } = queryState;
@@ -66,7 +80,11 @@ const Tests = () => {
             </a>
           </div>
           <div className="links">
+            <Link to="/" onClick={signOut}>
+              Sign-Out
+            </Link>
             <Link to="/tsl-training/">Training</Link>
+            {admin}
           </div>
         </div>
         <div className="testList">{content}</div>

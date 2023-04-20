@@ -1,16 +1,19 @@
 import "../styles/LandingPage.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../images/PactiveVideoPoster.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { db } from "../data/firebase";
 import { CircularProgress } from "@mui/material";
+// import Users from "../data/Users.json";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
   var pass;
   const [password, setPassword] = useState("");
   const [content, setContent] = useState("");
+  const [countdown, setCountdown] = useState();
 
-  const onClick = async (e) => {
+  async function onClick(e) {
     e.preventDefault();
     pass = parseInt(password);
     await db
@@ -29,7 +32,8 @@ const LandingPage = () => {
         } else {
           data.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            setContent(<CircularProgress />);
+            setCountdown(5);
+            setContent("Welcome " + doc.data().firstName + "!");
             window.sessionStorage.setItem("Account ID", doc.id);
             window.sessionStorage.setItem(
               "Account First Name",
@@ -47,15 +51,25 @@ const LandingPage = () => {
               "Account Position",
               doc.data().position
             );
-            window.location.href = "/tests";
+            document.getElementById("countdown").style.display = "block";
+            document.getElementById("content").style.color = "green";
+
+            setTimeout(() => {
+              navigate("/tests");
+            }, 5000);
           });
-          console.log(pass);
         }
       })
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
-  };
+  }
+
+  useEffect(() => {
+    const timer =
+      countdown > 0 && setInterval(() => setCountdown(countdown - 1), 1000);
+    return () => clearInterval(timer);
+  }, [countdown]);
 
   return (
     <>
@@ -71,28 +85,31 @@ const LandingPage = () => {
         </div>
         <div className="links">
           <Link to="/tests">Demo</Link>
+          <Link to="/sign-up">Sign Up</Link>
         </div>
       </div>
       <div className="LandingPage">
-        <img
-          src="https://images.unsplash.com/photo-1516937941344-00b4e0337589?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kdXN0cmlhbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
-          alt="fdfg"
-        />
-        <div className="login">
-          <form>
-            <label>
-              Enter Log-In{" "}
-              <input
-                type="number"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </label>
-            <input type="submit" value="Sign-In" onClick={onClick} />
-            {/* <button onClick={onClick}>Sign In</button> */}
-          </form>
-          <p>{content}</p>
-          <button>Sign Up</button>
+        <div className="form">
+          <h2>Enter Log-In</h2>
+          <input
+            type="number"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onClick(e);
+              }
+            }}
+          />
+          <button onClick={onClick}>Sign In</button>
+          <br />{" "}
+          <p id="countdown" style={{ display: "none" }}>
+            You will be redirected in:{" "}
+            <span style={{ color: "green" }}>{countdown}</span>
+          </p>
+          <p style={{ color: "red" }} id="content">
+            {content}
+          </p>
         </div>
       </div>
     </>

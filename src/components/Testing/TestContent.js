@@ -17,12 +17,14 @@ const TestContent = ({
     setCurrent(current + 1);
   };
 
-  const { title, questions, corrects, answers, testLength } = data;
-  console.log(questions);
+  const { title, questions, corrects, wrongs, testLength } = data;
 
-  const allAnswers = Object.values(answers[current] || [["hi"], ["bye"]]);
-  const renderedAnswers = [...allAnswers[0], ...allAnswers[1]];
-  shuffleArray(renderedAnswers);
+  const allAnswers = [];
+  wrongs[current]?.map((bad) => {
+    allAnswers.push(bad);
+  });
+  allAnswers.push(corrects[current]);
+  shuffleArray(allAnswers);
   const question = questions[current];
   const correct = corrects[current];
 
@@ -34,7 +36,7 @@ const TestContent = ({
           <h3>{question}</h3>
           {/* <p>The correct answer is: {correct}</p> */}
           <div className="answers">
-            {renderedAnswers?.map((answer, i) => {
+            {allAnswers?.map((answer, i) => {
               return (
                 <button key={i} value={answer} onClick={getAnswer}>
                   {answer.toString()}
@@ -44,7 +46,7 @@ const TestContent = ({
           </div>
         </>
       ) : (
-        <TestResults score={score} />
+        <TestResults score={score} length={questions.length} title={title} />
       )}
     </div>
   );

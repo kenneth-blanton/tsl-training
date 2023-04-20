@@ -1,8 +1,8 @@
 import { Link, useParams } from "react-router-dom";
-import logo from "../images/PactiveVideoPoster.png";
-import { db } from "../data/firebase";
+import logo from "../../images/PactiveVideoPoster.png";
+import { db } from "../../data/firebase";
 import { useEffect, useState } from "react";
-import "../styles/Tests.css";
+import "../../styles/Tests.css";
 import TestContent from "./TestContent";
 
 const TakeTest = () => {
@@ -12,11 +12,20 @@ const TakeTest = () => {
     title: "Loading",
     questions: "Loading",
     corrects: "",
-    answers: ["Loading"],
     testLength: 1,
   });
+  const [taken, setTaken] = useState(false);
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(0);
+  const [prevScore, setPrevScore] = useState(0);
+
+  function signOut() {
+    window.sessionStorage.setItem("Account ID", undefined);
+    window.sessionStorage.setItem("Account First Name", undefined);
+    window.sessionStorage.setItem("Account Last Name", undefined);
+    window.sessionStorage.setItem("Account Password", undefined);
+    window.sessionStorage.setItem("Account Position", undefined);
+  }
 
   function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
@@ -29,6 +38,12 @@ const TakeTest = () => {
 
   var docRef = db.collection("tests").doc(id);
 
+  var account = window.sessionStorage.getItem("Account ID");
+  if (account == null) {
+    account = "BJ";
+  }
+  var userRef = db.collection("users").doc(account);
+
   useEffect(() => {
     docRef
       .get()
@@ -39,19 +54,19 @@ const TakeTest = () => {
         shuffleArray(questions);
 
         let questionsList = [];
-        let answersList = [];
+        let wrongList = [];
         let correctsList = [];
 
         for (const question of questions) {
           questionsList.push(question.question);
         }
 
-        for (const answers of questions) {
-          answersList.push(answers.answers);
+        for (const wrongs of questions) {
+          wrongList.push(wrongs.incorrect);
         }
 
         for (const corrects of questions) {
-          correctsList.push(corrects.answers.correct.toString());
+          correctsList.push(corrects.correct.toString());
         }
 
         const testLength = questions.length;
@@ -61,24 +76,45 @@ const TakeTest = () => {
           title,
           questions: questionsList,
           corrects: correctsList,
-          answers: answersList,
+          wrongs: wrongList,
           testLength,
         });
       })
       .catch((error) => {
         console.log("Error getting document:", error);
       });
+    userRef
+      .get()
+      .then((user) => {
+        const completedTests = Object.keys(user.data().testsTaken);
+        setTaken(completedTests.includes(id));
+
+        setPrevScore(user.data().testsTaken[id].score);
+
+        // Object.keys(user.data().testsTaken).map((testsTaken) => {
+        //   console.log(testsTaken);
+        // });
+      })
+      .catch(() => {
+        console.log(
+          "User hasn't taken this test before so there is no previous score. All clear"
+        );
+      });
   }, []);
 
   const { isLoading } = data;
-
-  console.log("Current quesiton ", current);
-  console.log(score);
 
   let content;
 
   if (isLoading) {
     content = "Loading";
+  } else if (taken == true) {
+    content = (
+      <div style={{ width: 300, margin: "0 auto" }}>
+        <h2>You've completed this test</h2>
+        <h3>Your score is: {prevScore}</h3>
+      </div>
+    );
   } else {
     content = (
       <TestContent
@@ -106,6 +142,10 @@ const TakeTest = () => {
             </a>
           </div>
           <div className="links">
+            <Link to="/" onClick={signOut}>
+              Sign-Out
+            </Link>
+            <Link to="/tests">Tests</Link>
             <Link to="/tsl-training/">Training</Link>
           </div>
         </div>
