@@ -20,42 +20,18 @@
           "https://images.unsplash.com/photo-1496247749665-49cf5b1022e9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aW5kdXN0cmlhbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
           "https://images.unsplash.com/photo-1513828646384-e4d8ec30d2bb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGluZHVzdHJpYWx8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
         ],
-        "captions": ["Wear PPE", "Stuff", "Hand safety", "Follow Rules"]
+        "captions": ["Wear PPE", "Security", "Hand safety", "Follow Rules"]
       },
       {
         "id": 2,
         "name": "Cart",
-        "head": ["What it does", "Did do"],
+        "head": ["What it does", "Purpose"],
         "body": ["Form Air Function", "Time for Form"],
         "images": [
           "https://plus.unsplash.com/premium_photo-1673431020419-ebd2793aa6e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aW5kdXN0cmlhbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
           "https://images.unsplash.com/photo-1516937941344-00b4e0337589?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kdXN0cmlhbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
         ],
-        "captions": ["blah", "blleep"]
-      },
-      {
-        "id": 3,
-        "name": "Payout",
-        "head": ["What it does", "Did do"],
-        "body": ["Form Air Function", "Time for Form"],
-        "images": [],
-        "captions": []
-      },
-      {
-        "id": 4,
-        "name": "Sheet Clamp",
-        "head": ["What it does", "Did do"],
-        "body": ["Form Air Function", "Time for Form"],
-        "images": [],
-        "captions": []
-      },
-      {
-        "id": 5,
-        "name": "Eject Air",
-        "head": ["San Fran", "Oakland"],
-        "body": ["Eject Air Function", "Time for Eject"],
-        "images": [],
-        "captions": []
+        "captions": ["Cart", "Rail"]
       }
     ]
   },
@@ -69,16 +45,24 @@
         "name": "Sheet Clamp",
         "head": ["Does's", "That did"],
         "body": ["Form Air Function", "Time for Form"],
-        "images": [],
-        "captions": []
+        "images": [
+          "https://images.unsplash.com/photo-1516937941344-00b4e0337589?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kdXN0cmlhbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
+          "https://plus.unsplash.com/premium_photo-1673431020419-ebd2793aa6e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aW5kdXN0cmlhbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
+          "https://images.unsplash.com/photo-1496247749665-49cf5b1022e9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aW5kdXN0cmlhbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
+          "https://images.unsplash.com/photo-1513828646384-e4d8ec30d2bb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGluZHVzdHJpYWx8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
+        ],
+        "captions": ["Wear PPE", "Security", "Hand safety", "Follow Rules"]
       },
       {
         "id": 2,
         "name": "Eject Air",
         "head": ["Houston", "Dallas"],
         "body": ["Eject Air Function", "Time for Eject"],
-        "images": [],
-        "captions": []
+        "images": [
+          "https://images.unsplash.com/photo-1496247749665-49cf5b1022e9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8aW5kdXN0cmlhbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
+          "https://images.unsplash.com/photo-1513828646384-e4d8ec30d2bb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGluZHVzdHJpYWx8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
+        ],
+        "captions": ["What it does", "Purpose"]
       }
     ]
   },
@@ -110,64 +94,11 @@
         "name": "Payout",
         "head": ["Boise", "Blanco"],
         "body": ["Vacuum Function", "Time for Vacuum"],
-        "images": [],
-        "captions": []
-      },
-      {
-        "id": 3,
-        "name": "In-Feed",
-        "head": ["Boise", "Blanco"],
-        "body": ["Vacuum Function", "Time for Vacuum"],
-        "images": [],
-        "captions": []
-      },
-      {
-        "id": 4,
-        "name": "Oven",
-        "head": ["Boise", "Blanco"],
-        "body": ["Vacuum Function", "Time for Vacuum"],
-        "images": [],
-        "captions": []
-      },
-      {
-        "id": 5,
-        "name": "Console",
-        "head": ["Boise", "Blanco"],
-        "body": ["Vacuum Function", "Time for Vacuum"],
-        "images": [],
-        "captions": []
-      },
-      {
-        "id": 6,
-        "name": "Mold",
-        "head": ["Boise", "Blanco"],
-        "body": ["Vacuum Function", "Time for Vacuum"],
-        "images": [],
-        "captions": []
-      },
-      {
-        "id": 7,
-        "name": "Vacuum",
-        "head": ["Boise", "Blanco"],
-        "body": ["Vacuum Function", "Time for Vacuum"],
-        "images": [],
-        "captions": []
-      },
-      {
-        "id": 8,
-        "name": "Form Air",
-        "head": ["What it does", "When to use it"],
-        "body": ["Form Air Function", "Eject Air Function"],
-        "images": [],
-        "captions": []
-      },
-      {
-        "id": 9,
-        "name": "Eject Air",
-        "head": ["Wisconsin", "Mississippi"],
-        "body": ["Eject Air Function", "Time for Eject"],
-        "images": [],
-        "captions": []
+        "images": [
+          "https://plus.unsplash.com/premium_photo-1673431020419-ebd2793aa6e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aW5kdXN0cmlhbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
+          "https://images.unsplash.com/photo-1516937941344-00b4e0337589?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kdXN0cmlhbHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60"
+        ],
+        "captions": ["What it does", "Purpose"]
       }
     ]
   }
