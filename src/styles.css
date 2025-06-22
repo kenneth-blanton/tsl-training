@@ -1,0 +1,59 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+main {
+  flex: 1;
+  padding: 60px;
+}
+
+.spacer {
+  flex: 1;
+}
+.hamburger {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  display: none;
+  cursor: pointer;
+  z-index: 1101;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .nav-links.active {
+    transform: translateX(0);
+  }
+  .backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1100;
+  }
+}

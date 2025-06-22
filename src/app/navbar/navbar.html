@@ -1,0 +1,43 @@
+<nav class="navbar">
+  <img src="https://picsum.photos/50/50" alt="" />
+  <div class="spacer"></div>
+  <button class="hamburger" (click)="toggleDrawer()" aria-label="Open menu">
+    &#9776;
+  </button>
+  <div
+    class="nav-links"
+    [class.open]="drawerOpen"
+    (click)="$event.stopPropagation()"
+  >
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      aria-label="Dashboard"
+      (click)="closeDrawer()"
+      >🏠 Home</a
+    >
+    <a
+      routerLink="/thermoforming101"
+      routerLinkActive="active"
+      aria-label="Thermoforming 101"
+      (click)="closeDrawer()"
+      >📘 101</a
+    >
+    <a
+      routerLink="/sops"
+      routerLinkActive="active"
+      aria-label="SOPs"
+      (click)="closeDrawer()"
+      >📋 SOPs</a
+    >
+    <a
+      routerLink="/log-uploader"
+      routerLinkActive="active"
+      aria-label="Log Uploader"
+      (click)="closeDrawer()"
+      >📤 Upload</a
+    >
+  </div>
+  <div class="backdrop" *ngIf="drawerOpen" (click)="closeDrawer()"></div>
+</nav>
