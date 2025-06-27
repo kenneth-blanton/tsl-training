@@ -1,0 +1,42 @@
+<div class="login-container">
+  <div class="login-form-wrapper">
+    <h2>Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="signIn()">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          placeholder="you@example.com"
+          formControlName="email"
+        />
+        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="validation-error">
+          <div *ngIf="email.errors?.['required']">Email is required.</div>
+          <div *ngIf="email.errors?.['email']">Please enter a valid email.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="validation-error">
+          <div *ngIf="password.errors?.['required']">Password is required.</div>
+          <div *ngIf="password.errors?.['minlength']">Password must be at least 6 characters.</div>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid">Sign In</button>
+    </form>
+
+    <div *ngIf="loginError" class="login-error-message">
+      {{ loginError }}
+    </div>
+
+    <button (click)="signOut()" class="sign-out-button">Sign Out</button>
+  </div>
+</div>

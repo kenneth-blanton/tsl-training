@@ -1,0 +1,52 @@
+<div>
+  <div class="daily-entry">
+    <h2>Daily Entry</h2>
+    <span>{{ date | date: 'longDate' }}</span>
+    <form [formGroup]="dailyEntryForm" (ngSubmit)="onSubmit()">
+      <!-- This div will contain the array of note inputs -->
+      <div class="main-form-content">
+        <div formArrayName="notes">
+          <div
+            *ngFor="let note of notes.controls; let i = index"
+            class="form-group note-item"
+          >
+            <label for="notes-{{ i }}">Note {{ i + 1 }}</label>
+            <div class="note-input-group">
+              <textarea
+                id="notes-{{ i }}"
+                [formControlName]="i"
+                rows="3"
+              ></textarea>
+              <!-- This button calls removeNote() with the current index -->
+              <button
+                class="remove-note"
+                type="button"
+                (click)="removeNote(i)"
+                [disabled]="notes.length <= 1"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- This button now calls the addNote() method -->
+        <button class="add-new-note" type="button" (click)="addNote()">
+          Add New Note
+        </button>
+      </div>
+
+      <!-- Display success message here -->
+      <div *ngIf="successMessage" class="submission-feedback">
+        {{ successMessage }}
+      </div>
+      <!-- Display error message here -->
+      <div *ngIf="errorMessage" class="submission-feedback error">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Submit button for the form -->
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>

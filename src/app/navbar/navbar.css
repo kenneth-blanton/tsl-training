@@ -7,7 +7,7 @@
   z-index: 1000;
   background: #fff; /* Or your preferred color */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 2rem;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -52,6 +52,36 @@
 .nav-links a.active {
   background-color: rgba(0, 0, 0, 0.1);
   font-weight: bold;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 8px 12px;
+}
+
+.user-email {
+  font-weight: 500;
+  color: #34495e;
+}
+
+.logout-button,
+.nav-link-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 1em;
+}
+
+.logout-button:hover,
+.nav-link-button:hover {
+  background-color: #2980b9;
 }
 
 @media (max-width: 600px) {

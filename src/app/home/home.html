@@ -1,1 +1,12 @@
-<p>home works!</p>
+<ng-container *ngIf="!(user$ | async); else loggedIn">
+  <!-- This shows the login component when the user is logged out -->
+  <app-login-component></app-login-component>
+</ng-container>
+
+<ng-template #loggedIn>
+  <!-- This container will be styled for logged-in users -->
+  <div class="home-container">
+    <p class="welcome-message">Welcome back, {{ (user$ | async)?.email }}!</p>
+    <button class="sign-out-button" (click)="signOut()">Sign Out</button>
+  </div>
+</ng-template>

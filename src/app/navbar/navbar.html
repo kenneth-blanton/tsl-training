@@ -1,5 +1,16 @@
 <nav class="navbar">
-  <img src="https://picsum.photos/50/50" alt="" />
+  <div>
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      aria-label="Dashboard"
+      (click)="closeDrawer()"
+    >
+      <img src="https://picsum.photos/50/50" alt="" />
+    </a>
+  </div>
+
   <div class="spacer"></div>
   <button class="hamburger" (click)="toggleDrawer()" aria-label="Open menu">
     &#9776;
@@ -9,14 +20,6 @@
     [class.open]="drawerOpen"
     (click)="$event.stopPropagation()"
   >
-    <a
-      routerLink="/"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      aria-label="Dashboard"
-      (click)="closeDrawer()"
-      >🏠 Home</a
-    >
     <a
       routerLink="/thermoforming101"
       routerLinkActive="active"
@@ -38,6 +41,28 @@
       (click)="closeDrawer()"
       >📤 Upload</a
     >
+    <a
+      routerLink="/daily-entry"
+      routerLinkActive="active"
+      aria-label="Daily Entry"
+      (click)="closeDrawer()"
+      >📅 Daily Entry</a
+    >
+    <!-- Conditionally show user info or a login link -->
+    <ng-container *ngIf="user$ | async as user; else showLogin">
+      <!-- This block shows when the user is logged in -->
+      <div class="user-info">
+        <span class="user-email">{{ user.email }}</span>
+        <button class="logout-button" (click)="logout()">Logout</button>
+      </div>
+    </ng-container>
+
+    <ng-template #showLogin>
+      <!-- This block shows when the user is logged out -->
+      <a routerLink="/login" class="nav-link-button" (click)="closeDrawer()"
+        >Sign In</a
+      >
+    </ng-template>
   </div>
   <div class="backdrop" *ngIf="drawerOpen" (click)="closeDrawer()"></div>
 </nav>
