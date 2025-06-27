@@ -155,3 +155,66 @@ button[type="submit"]:hover {
   color: #a94442;
   border-color: #ebccd1;
 }
+
+/* Styles for the existing notes section */
+.existing-notes-section {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #ecf0f1; /* Separator from the top content */
+}
+
+.existing-notes-section h3 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.notes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.note-display-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ecf0f1;
+  gap: 15px;
+}
+
+.note-text {
+  flex-grow: 1;
+  color: #34495e;
+  line-height: 1.6;
+}
+
+.note-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-shrink: 0; /* Prevent this container from shrinking */
+}
+
+.note-timestamp {
+  color: #7f8c8d;
+  font-size: 0.9em;
+  margin: 0px 8px;
+  white-space: nowrap; /* Prevent timestamp from wrapping */
+}
+
+.remove-existing-note {
+  background-color: #e74c3c;
+  color: white;
+  padding: 8px 15px; /* Slightly smaller padding */
+  font-size: 14px;
+}
+
+.remove-existing-note:hover {
+  background-color: #c0392b;
+}

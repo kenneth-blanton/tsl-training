@@ -2,6 +2,39 @@
   <div class="daily-entry">
     <h2>Daily Entry</h2>
     <span>{{ date | date: 'longDate' }}</span>
+
+    <!-- This section displays the notes fetched from Firestore. -->
+    <!-- The *ngIf ensures it only shows up if there are notes to display. -->
+    <div
+      class="existing-notes-section"
+      *ngIf="existingNotes && existingNotes.length > 0"
+    >
+      <h3>Today's Notes</h3>
+      <!-- The *ngFor directive loops through the 'existingNotes' array -->
+      <!-- that your component populates on page load. -->
+      <ul class="notes-list">
+        <li
+          *ngFor="let note of existingNotes"
+          class="note-display-item"
+        >
+          <span class="note-text">{{ note.text }}</span>
+          <span class="note-meta">
+            <small class="note-timestamp">{{
+              note.timestamp.toDate() | date: 'shortTime'
+            }}</small>
+            <!-- This button correctly calls the remove function. -->
+            <button
+              class="remove-existing-note"
+              type="button"
+              (click)="removeExistingNote(note)"
+            >
+              Remove
+            </button>
+          </span>
+        </li>
+      </ul>
+    </div>
+
     <form [formGroup]="dailyEntryForm" (ngSubmit)="onSubmit()">
       <!-- This div will contain the array of note inputs -->
       <div class="main-form-content">
