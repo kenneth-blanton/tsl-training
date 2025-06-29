@@ -1,6 +1,11 @@
 /* Main container for the component */
+/* .daily-entry-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f4f6f7;
+} */
 .daily-entry {
-  max-width: 700px;
+  max-width: 100%;
   margin: 40px auto;
   padding: 30px;
   background: #ffffff;
@@ -178,8 +183,9 @@ button[type="submit"]:hover {
 
 .note-display-item {
   display: flex;
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start; /* Align items to the top */
   background-color: #f9f9f9;
   padding: 15px;
   border-radius: 5px;
@@ -189,16 +195,82 @@ button[type="submit"]:hover {
 }
 
 .note-text {
-  flex-grow: 1;
+  width: 100%; /* Take full width to appear on its own line */
   color: #34495e;
   line-height: 1.6;
+  margin-bottom: 10px; /* Space below the text */
+}
+
+/* Container for existing images */
+.existing-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.image-container {
+  position: relative;
+}
+
+.note-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.remove-image {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Styles for "Add Images" to existing notes */
+.add-more-images {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.add-images-label {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #3498db;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.add-images-label:hover {
+  background-color: #2980b9;
+}
+
+.add-images-input {
+  display: none; /* Hide the actual file input */
 }
 
 .note-meta {
   display: flex;
   align-items: center;
   gap: 15px;
-  flex-shrink: 0; /* Prevent this container from shrinking */
+  flex-shrink: 0;
+  width: 100%; /* Take full width */
+  justify-content: flex-end; /* Align items to the right */
 }
 
 .note-timestamp {
@@ -206,6 +278,22 @@ button[type="submit"]:hover {
   font-size: 0.9em;
   margin: 0px 8px;
   white-space: nowrap; /* Prevent timestamp from wrapping */
+}
+
+/* Image Preview Styles */
+.image-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.image-preview-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #ddd;
 }
 
 .remove-existing-note {
@@ -217,4 +305,35 @@ button[type="submit"]:hover {
 
 .remove-existing-note:hover {
   background-color: #c0392b;
+}
+
+/* Media Query for Mobile Responsiveness */
+@media (max-width: 768px) {
+  .daily-entry {
+    margin-top: 54px;
+    padding: 8px;
+  }
+
+  .note-display-item {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .note-meta {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .note-input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .note-input-group textarea {
+    margin-bottom: 10px;
+  }
+
+  .remove-note {
+    width: 100%;
+  }
 }

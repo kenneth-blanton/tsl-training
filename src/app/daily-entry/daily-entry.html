@@ -13,15 +13,30 @@
       <!-- The *ngFor directive loops through the 'existingNotes' array -->
       <!-- that your component populates on page load. -->
       <ul class="notes-list">
-        <li
-          *ngFor="let note of existingNotes"
-          class="note-display-item"
-        >
-          <span class="note-text">{{ note.text }}</span>
+        <li *ngFor="let note of existingNotes" class="note-display-item">
+          <span class="note-text">
+            <strong *ngIf="note.line">[{{ note.line }}] </strong>{{ note.text }}
+          </span>
+          <!-- Display existing images -->
+          <div
+            *ngIf="note.imageUrls && note.imageUrls.length > 0"
+            class="existing-images"
+          >
+            <div *ngFor="let image of note.imageUrls" class="image-container">
+              <img [src]="image.url" alt="Note image" width="100" />
+              <button
+                type="button"
+                class="remove-image"
+                (click)="removeImageFromNote(note, image)"
+              >
+                &times;
+              </button>
+            </div>
+          </div>
           <span class="note-meta">
-            <small class="note-timestamp">{{
-              note.timestamp.toDate() | date: 'shortTime'
-            }}</small>
+            <small class="note-timestamp"
+              >{{ note.timestamp.toDate() | date: 'shortTime' }}</small
+            >
             <!-- This button correctly calls the remove function. -->
             <button
               class="remove-existing-note"
@@ -39,28 +54,52 @@
       <!-- This div will contain the array of note inputs -->
       <div class="main-form-content">
         <div formArrayName="notes">
-          <div
+          <!-- Use ng-container to group each form group in the FormArray -->
+          <ng-container
             *ngFor="let note of notes.controls; let i = index"
-            class="form-group note-item"
+            [formGroupName]="i"
           >
-            <label for="notes-{{ i }}">Note {{ i + 1 }}</label>
-            <div class="note-input-group">
-              <textarea
-                id="notes-{{ i }}"
-                [formControlName]="i"
-                rows="3"
-              ></textarea>
-              <!-- This button calls removeNote() with the current index -->
-              <button
-                class="remove-note"
-                type="button"
-                (click)="removeNote(i)"
-                [disabled]="notes.length <= 1"
-              >
-                Remove
-              </button>
+            <div class="form-group note-item">
+              <label for="notes-{{ i }}">Note {{ i + 1 }}</label>
+              <div class="note-input-group">
+                <textarea
+                  id="notes-{{ i }}"
+                  formControlName="text"
+                  rows="3"
+                ></textarea>
+                <!-- This button calls removeNote() with the current index -->
+                <button
+                  class="remove-note"
+                  type="button"
+                  (click)="removeNote(i)"
+                  [disabled]="notes.length <= 1"
+                >
+                  Remove
+                </button>
+              </div>
+              <!-- Image upload input -->
+              <div class="form-group">
+                <label for="images-{{ i }}">Add Images (Optional)</label>
+                <input
+                  id="images-{{ i }}"
+                  type="file"
+                  multiple
+                  (change)="onFileSelect($event, i)"
+                  accept="image/*"
+                />
+              </div>
+              <!-- Dropdown for selecting a line -->
+              <div class="form-group">
+                <label for="line-{{ i }}">Line (Optional)</label>
+                <select id="line-{{ i }}" formControlName="line">
+                  <option value="">General</option>
+                  <option *ngFor="let line of lines" [value]="line">
+                    {{ line }}
+                  </option>
+                </select>
+              </div>
             </div>
-          </div>
+          </ng-container>
         </div>
 
         <!-- This button now calls the addNote() method -->

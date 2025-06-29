@@ -13,11 +13,13 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { environment } from '../environments/environment';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
     provideAuth(() => getAuth()),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
