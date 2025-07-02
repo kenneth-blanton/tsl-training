@@ -1,0 +1,191 @@
+/* Add a subtle highlight for the heat zones area */
+[formArrayName="heatZones"] {
+  background: #f1f7fa;
+  border-radius: 7px;
+  padding: 1rem 1rem 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e3eaf3;
+}
+
+.recipe-form-container {
+  margin: 3rem auto 0 auto;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  background: #f9f9f9;
+  padding: 1em;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.08);
+}
+
+form label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  color: #333;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+}
+
+form select,
+form input[type="number"],
+form input[type="text"] {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.4rem;
+  border: 1px solid #b0bec5;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  background: #fff;
+  transition: border 0.2s;
+}
+
+form select:focus,
+form input[type="number"]:focus,
+form input[type="text"]:focus {
+  border-color: #1976d2;
+  outline: none;
+}
+
+button[type="button"],
+button[type="submit"] {
+  margin-top: 1.2rem;
+  margin-right: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  background: #1976d2;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.08rem;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+}
+
+button[type="button"]:hover,
+button[type="submit"]:hover {
+  background: #1565c0;
+}
+
+div[formGroupName] {
+  margin-bottom: 0.7rem;
+}
+
+h2 {
+  color: #1976d2;
+  margin-top: 3.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul > li {
+  background: #fff;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+ul ul {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+}
+
+ul ul li {
+  background: none;
+  box-shadow: none;
+  padding: 0.25rem 0;
+  border-radius: 0;
+  color: #1976d2;
+  font-size: 0.97em;
+}
+
+/* Make heat zone input fields display in two columns */
+[formArrayName="heatZones"] > div[formGroupName] {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+
+[formArrayName="heatZones"] strong {
+  min-width: 120px;
+  margin-right: 1.5rem;
+  align-self: flex-start;
+  font-size: 1.08em;
+  padding-top: 0.5rem;
+}
+
+/* Group the two labels (set point & actual value) in a grid */
+[formArrayName="heatZones"] > div[formGroupName] {
+  /* already flex */
+}
+
+[formArrayName="heatZones"] > div[formGroupName] label {
+  flex: 1 1 180px;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  margin-right: 0.5rem;
+}
+
+/* Wrap the two labels in a container for grid layout */
+[formArrayName="heatZones"] > div[formGroupName] {
+  /* Add a wrapper for the two labels if possible in HTML for best results.
+     If not, this will still make them appear side by side on wide screens. */
+}
+
+/* Make set point and actual value fields appear in two columns */
+[formArrayName="heatZones"] .zone-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+[formArrayName="heatZones"] .zone-fields label {
+  margin-bottom: 0;
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 600px) {
+  [formArrayName="heatZones"] .zone-fields {
+    grid-template-columns: 2fr 1fr;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .zone-fields {
+    display: flex;
+    width: 100%;
+  }
+  .zone-fields label {
+    text-wrap: nowrap;
+    max-width: 100px;
+    text-align: center;
+  }
+
+  .zone-fields input {
+    min-width: 3rem;
+  }
+}

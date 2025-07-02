@@ -6,6 +6,7 @@ import { Sops } from './sops/sops';
 import { LogUploader } from './log-uploader/log-uploader';
 import { DailyEntry } from './daily-entry/daily-entry';
 import { authGuard } from './auth/auth.guard';
+import { Recipes } from './recipes/recipes';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,12 @@ export const routes: Routes = [
     path: 'log-uploader',
     component: LogUploader,
     title: 'Log Uploader',
+    canActivate: [authGuard],
+  },
+  {
+    path: 'recipes',
+    component: Recipes,
+    title: 'Recipes',
     canActivate: [authGuard],
   },
   {

@@ -1,0 +1,77 @@
+<h2>Add Recipe</h2>
+
+<form (ngSubmit)="addRecipe()" [formGroup]="newRecipeForm">
+  <label>
+    <strong>Line</strong>
+    <select formControlName="line">
+      <option value="" disabled selected>Select a line</option>
+      <option *ngFor="let line of lines" [value]="line">{{ line }}</option>
+    </select>
+  </label>
+
+  <label>
+    <strong>Product Name</strong>
+    <input type="text" formControlName="productName" required />
+  </label>
+
+  <label>
+    <strong>Heat Zones</strong>
+    <div formArrayName="heatZones">
+      <div
+        *ngFor="let zone of this.heatZoneConfigs[this.newRecipeForm.get('line')!.value]; let i = index"
+        [formGroupName]="i"
+        class="zone-fields"
+      >
+        <strong>{{ zone.name }}</strong>
+        <br />
+        <label>
+          Set Point
+          <input
+            type="number"
+            formControlName="setPoint"
+            required
+            [defaultValue]=""
+          />
+        </label>
+        <label>
+          Actual Value
+          <input
+            type="number"
+            formControlName="actualValue"
+            required
+            [defaultValue]=""
+          />
+        </label>
+      </div>
+    </div>
+  </label>
+
+  <label>
+    <strong>Index Length</strong>
+    <input type="number" formControlName="indexLength" required />
+  </label>
+
+  <label>
+    <strong>Mold Cycle Time</strong>
+    <input type="number" formControlName="moldCycleTime" required />
+  </label>
+  <label>
+    <strong>Pieces Made</strong>
+    <input type="number" formControlName="piecesMade" required />
+  </label>
+  <label>
+    <strong>Scrap Amount</strong>
+    <input type="number" formControlName="scrapAmount" required />
+  </label>
+
+  <!-- Display success message here -->
+  <div *ngIf="successMessage" class="submission-feedback">
+    {{ successMessage }}
+  </div>
+  <!-- Display error message here -->
+  <div *ngIf="errorMessage" class="submission-feedback error">
+    {{ errorMessage }}
+  </div>
+
+  <button type="submit">Add Recipe</button>
+</form>
