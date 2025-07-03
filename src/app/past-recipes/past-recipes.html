@@ -1,0 +1,58 @@
+<h2>Recipes for {{ (recipes$ | async)?.[0]?.line }}</h2>
+
+<p *ngIf="!(recipes$ | async)">Loading...</p>
+<p *ngIf="(recipes$ | async)?.length === 0">No recipes found for this line.</p>
+
+<div class="recipes-list">
+  <details *ngFor="let recipe of recipes$ | async" class="recipe-item">
+    <summary>
+      <span class="product-name">{{ recipe.productName }}</span>
+      <span class="timestamp"
+        >{{ recipe.createdAt.toDate() | date:'short' }}</span
+      >
+    </summary>
+    <div class="recipe-body">
+      <label>
+        <strong>Product Name</strong>
+        <input type="text" [value]="recipe.productName" disabled />
+      </label>
+
+      <label>
+        <strong>Heat Zones</strong>
+        <div class="heat-zones-display">
+          <div *ngFor="let zone of recipe.heatZones" class="zone-fields">
+            <strong>{{ zone.name }}</strong>
+            <label>
+              Set Point
+              <input type="number" [value]="zone.setPoint" disabled />
+            </label>
+            <label>
+              Actual Value
+              <input type="number" [value]="zone.actualValue" disabled />
+            </label>
+          </div>
+        </div>
+      </label>
+
+      <label>
+        <strong>Index Length</strong>
+        <input type="number" [value]="recipe.indexLength" disabled />
+      </label>
+
+      <label>
+        <strong>Mold Cycle Time</strong>
+        <input type="number" [value]="recipe.moldCycleTime" disabled />
+      </label>
+
+      <label>
+        <strong>Pieces Made</strong>
+        <input type="number" [value]="recipe.piecesMade" disabled />
+      </label>
+
+      <label>
+        <strong>Scrap Amount</strong>
+        <input type="number" [value]="recipe.scrapAmount" disabled />
+      </label>
+    </div>
+  </details>
+</div>

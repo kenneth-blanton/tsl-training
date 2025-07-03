@@ -7,6 +7,15 @@
   <!-- This container will be styled for logged-in users -->
   <div class="home-container">
     <p class="welcome-message">Welcome back, {{ (user$ | async)?.email }}!</p>
+    <a routerLink="/recipes" routerLinkActive="active" aria-label="Recipes"
+      >📖 Recipes</a
+    >
+    <a
+      routerLink="/daily-entry"
+      routerLinkActive="active"
+      aria-label="Daily Entry"
+      >📅 Daily Entry</a
+    >
     <button class="sign-out-button" (click)="signOut()">Sign Out</button>
   </div>
 </ng-template>

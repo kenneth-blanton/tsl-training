@@ -1,0 +1,306 @@
+h2 {
+  margin-top: 3em;
+}
+
+.recipe-details {
+  border: 1px solid #000;
+  margin-bottom: 1em;
+}
+
+.recipes-list {
+  margin: 2rem auto;
+  max-width: 540px;
+}
+
+.recipe-item {
+  background: #f9f9f9;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  border: 1px solid #e3eaf3;
+  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.08);
+}
+
+.recipe-item[open] summary {
+  border-bottom: 1px solid #e3eaf3;
+}
+
+summary {
+  padding: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::after {
+  content: "+";
+  font-size: 1.5rem;
+  color: #1976d2;
+  transition: transform 0.2s;
+}
+
+.recipe-item[open] summary::after {
+  content: "−";
+}
+
+.recipe-body {
+  padding: 1em;
+}
+
+.recipe-body label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  color: #333;
+  font-size: 1.05rem;
+}
+
+.recipe-body input[type="number"],
+.recipe-body input[type="text"] {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.4rem;
+  border: 1px solid #b0bec5;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  background: #eceff1;
+  cursor: not-allowed;
+}
+
+.heat-zones-display {
+  background: #f1f7fa;
+  border-radius: 7px;
+  padding: 1rem 1rem 0.5rem 1rem;
+  margin-top: 0.4rem;
+  border: 1px solid #e3eaf3;
+}
+
+.zone-fields {
+  display: grid;
+  grid-template-columns: 120px 1fr 1fr;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.zone-fields strong {
+  font-size: 1.08em;
+}
+
+.zone-fields label {
+  margin-bottom: 0;
+  font-weight: 500;
+  color: #333;
+  font-size: 1rem;
+}
+
+.zone-fields input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #b0bec5;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  background: #eceff1;
+}
+
+.zone-fields .temperature {
+  display: flex;
+  align-items: center;
+}
+
+.zone-fields .temperature input {
+  flex: 1;
+  margin-right: 0.5rem;
+}
+
+.zone-fields .temperature span {
+  font-weight: 600;
+  color: #333;
+}
+
+.zone-fields .remove-zone {
+  cursor: pointer;
+  color: #d32f2f;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.zone-fields .remove-zone:hover {
+  color: #b71c1c;
+}
+
+.add-zone {
+  background: #1976d2;
+  color: #fff;
+  padding: 0.8rem 1.2rem;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.add-zone:hover {
+  background: #155a8a;
+}
+
+.instructions {
+  margin-top: 2rem;
+}
+
+.instructions h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.instructions ol {
+  padding-left: 1.5rem;
+}
+
+.instructions li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.notes {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+}
+
+.notes h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #333;
+}
+
+.notes p {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.nutrition {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+}
+
+.nutrition h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  color: #333;
+}
+
+.nutrition table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.nutrition th,
+.nutrition td {
+  padding: 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.nutrition th {
+  background: #f1f1f1;
+  font-weight: 600;
+}
+
+.nutrition .calories {
+  font-weight: 500;
+  color: #e53935;
+}
+
+.nutrition .serving-size {
+  font-weight: 500;
+  color: #1976d2;
+}
+
+@media (max-width: 768px) {
+  .recipes-list {
+    margin: 1rem;
+  }
+
+  .recipe-item {
+    border-radius: 8px;
+  }
+
+  summary {
+    font-size: 1rem;
+  }
+
+  .recipe-body label {
+    font-size: 0.9rem;
+  }
+
+  .recipe-body input[type="number"],
+  .recipe-body input[type="text"] {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .heat-zones-display {
+    padding: 0.8rem;
+  }
+
+  .zone-fields {
+    grid-template-columns: 100px 1fr;
+  }
+
+  .zone-fields strong {
+    font-size: 1em;
+  }
+
+  .zone-fields label {
+    font-size: 0.9rem;
+  }
+
+  .zone-fields input {
+    font-size: 0.9rem;
+  }
+
+  .zone-fields .temperature span {
+    font-size: 0.9rem;
+  }
+
+  .zone-fields .remove-zone {
+    font-size: 0.9rem;
+  }
+
+  .add-zone {
+    padding: 0.6rem 0.8rem;
+    font-weight: 500;
+  }
+
+  .instructions h3,
+  .notes h3,
+  .nutrition h3 {
+    font-size: 1.2rem;
+  }
+
+  .instructions li {
+    font-size: 0.9rem;
+  }
+
+  .nutrition table {
+    font-size: 0.9rem;
+  }
+}

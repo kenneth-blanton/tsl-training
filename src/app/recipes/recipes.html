@@ -31,6 +31,7 @@
             formControlName="setPoint"
             required
             [defaultValue]=""
+            min="0"
           />
         </label>
         <label>
@@ -40,6 +41,7 @@
             formControlName="actualValue"
             required
             [defaultValue]=""
+            min="0"
           />
         </label>
       </div>
@@ -48,20 +50,20 @@
 
   <label>
     <strong>Index Length</strong>
-    <input type="number" formControlName="indexLength" required />
+    <input type="number" formControlName="indexLength" min="0" required />
   </label>
 
   <label>
     <strong>Mold Cycle Time</strong>
-    <input type="number" formControlName="moldCycleTime" required />
+    <input type="number" formControlName="moldCycleTime" min="0" required />
   </label>
   <label>
     <strong>Pieces Made</strong>
-    <input type="number" formControlName="piecesMade" required />
+    <input type="number" formControlName="piecesMade" min="0" required />
   </label>
   <label>
     <strong>Scrap Amount</strong>
-    <input type="number" formControlName="scrapAmount" required />
+    <input type="number" formControlName="scrapAmount" min="0" required />
   </label>
 
   <!-- Display success message here -->
@@ -75,3 +77,12 @@
 
   <button type="submit">Add Recipe</button>
 </form>
+
+<h2>Past Recipes</h2>
+<div class="past-recipes">
+  <ul>
+    <li *ngFor="let line of lines">
+      <a href="past-recipes/{{ line }}">{{ line }}</a>
+    </li>
+  </ul>
+</div>

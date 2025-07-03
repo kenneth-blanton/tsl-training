@@ -21,8 +21,8 @@ form {
   border-radius: 12px;
   max-width: 500px;
   width: 100%;
-  margin-bottom: 2rem;
   box-shadow: 0 4px 16px rgba(25, 118, 210, 0.08);
+  margin: 0 auto;
 }
 
 form label {
@@ -118,6 +118,32 @@ ul ul li {
   font-size: 0.97em;
 }
 
+.past-recipes ul {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+  margin: 2em 0;
+}
+.past-recipes li {
+  width: 100%;
+  text-align: center;
+  border: #1565c0 1px solid;
+  border-radius: 6px;
+}
+
+/* Hide spin buttons on number inputs for Webkit browsers */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide spin buttons on number inputs for Firefox */
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
 /* Make heat zone input fields display in two columns */
 [formArrayName="heatZones"] > div[formGroupName] {
   display: flex;
@@ -135,23 +161,12 @@ ul ul li {
   padding-top: 0.5rem;
 }
 
-/* Group the two labels (set point & actual value) in a grid */
-[formArrayName="heatZones"] > div[formGroupName] {
-  /* already flex */
-}
-
 [formArrayName="heatZones"] > div[formGroupName] label {
   flex: 1 1 180px;
   margin-bottom: 0;
   display: flex;
   flex-direction: column;
   margin-right: 0.5rem;
-}
-
-/* Wrap the two labels in a container for grid layout */
-[formArrayName="heatZones"] > div[formGroupName] {
-  /* Add a wrapper for the two labels if possible in HTML for best results.
-     If not, this will still make them appear side by side on wide screens. */
 }
 
 /* Make set point and actual value fields appear in two columns */

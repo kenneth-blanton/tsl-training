@@ -7,6 +7,7 @@ import { LogUploader } from './log-uploader/log-uploader';
 import { DailyEntry } from './daily-entry/daily-entry';
 import { authGuard } from './auth/auth.guard';
 import { Recipes } from './recipes/recipes';
+import { PastRecipes } from './past-recipes/past-recipes';
 
 export const routes: Routes = [
   {
@@ -32,6 +33,11 @@ export const routes: Routes = [
     component: Recipes,
     title: 'Recipes',
     canActivate: [authGuard],
+  },
+  {
+    path: 'past-recipes/:line',
+    component: PastRecipes,
+    title: 'Past Recipes',
   },
   {
     path: 'thermoforming101',
