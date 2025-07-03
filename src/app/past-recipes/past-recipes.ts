@@ -23,7 +23,6 @@ export class PastRecipes {
 
   constructor() {
     const line = this.route.snapshot.paramMap.get('line');
-    console.log(`Line from URL: ${line}`);
     const recipeCollection = collection(this.firestore, 'recipes');
 
     if (line) {
@@ -32,10 +31,6 @@ export class PastRecipes {
         where('line', '==', line)
       );
       this.recipes$ = collectionData(filteredCollection);
-      console.log(
-        `Filtered recipes for line ${line}:`,
-        this.recipes$.subscribe((recipes) => console.log(recipes))
-      );
     } else {
       // Handle case where line is not in the URL, maybe load all recipes or show an error
       this.recipes$ = collectionData(recipeCollection);
