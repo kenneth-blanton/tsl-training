@@ -84,23 +84,31 @@ summary::after {
   border: 1px solid #e3eaf3;
 }
 
-.zone-fields {
-  display: grid;
-  grid-template-columns: 120px 1fr 1fr;
-  gap: 1rem;
-  align-items: center;
+.zone-item {
   margin-bottom: 1rem;
 }
 
-.zone-fields strong {
+.zone-item:last-child {
+  margin-bottom: 0;
+}
+
+.zone-item strong {
+  display: block;
+  margin-bottom: 0.5rem;
   font-size: 1.08em;
+}
+
+.zone-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
 .zone-fields label {
   margin-bottom: 0;
+  font-size: 1rem;
   font-weight: 500;
   color: #333;
-  font-size: 1rem;
 }
 
 .zone-fields input {

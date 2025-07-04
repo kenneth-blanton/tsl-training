@@ -1,18 +1,93 @@
 <h2>Add Recipe</h2>
 
-<form (ngSubmit)="addRecipe()" [formGroup]="newRecipeForm">
+<form
+  (ngSubmit)="addRecipe()"
+  [formGroup]="newRecipeForm"
+  [class.form-submitted]="submitted"
+>
   <label>
     <strong>Line</strong>
     <select formControlName="line">
-      <option value="" disabled selected>Select a line</option>
+      <option value="" disabled selected required>Select a line</option>
       <option *ngFor="let line of lines" [value]="line">{{ line }}</option>
     </select>
   </label>
 
   <label>
     <strong>Product Name</strong>
-    <input type="text" formControlName="productName" required />
+    <select formControlName="productName">
+      <option value="" disabled selected required>Select a product</option>
+      <option *ngFor="let product of products$ | async" [value]="product.id">
+        {{ product.name }}
+      </option>
+    </select>
   </label>
+
+  <!-- Incrementally shown fields based on product selection -->
+  <ng-container *ngIf="selectedProduct">
+    <!-- Width -->
+    <ng-container *ngIf="selectedProduct.width?.length > 0">
+      <label>
+        <strong>Width</strong>
+        <select formControlName="width">
+          <option *ngFor="let w of selectedProduct.width" [value]="w">
+            {{ w }}
+          </option>
+        </select>
+      </label>
+    </ng-container>
+
+    <!-- Length -->
+    <ng-container *ngIf="selectedProduct.length?.length > 0">
+      <label>
+        <strong>Length</strong>
+        <select formControlName="length">
+          <option *ngFor="let l of selectedProduct.length" [value]="l">
+            {{ l }}
+          </option>
+        </select>
+      </label>
+    </ng-container>
+
+    <!-- Mil -->
+    <ng-container *ngIf="selectedProduct.mil?.length > 0">
+      <label>
+        <strong>Sheet Thickness</strong>
+        <select formControlName="mil">
+          <option *ngFor="let m of selectedProduct.mil" [value]="m">
+            {{ m }}
+          </option>
+        </select>
+      </label>
+    </ng-container>
+
+    <!-- Sides -->
+    <ng-container *ngIf="selectedProduct.sides?.length > 0">
+      <label>
+        <strong>Side</strong>
+        <select formControlName="sides">
+          <option *ngFor="let side of selectedProduct.sides" [value]="side">
+            {{ side }}
+          </option>
+        </select>
+      </label>
+    </ng-container>
+
+    <!-- Degrees -->
+    <ng-container *ngIf="selectedProduct.degrees?.length > 0">
+      <label>
+        <strong>Degrees</strong>
+        <select formControlName="degrees">
+          <option
+            *ngFor="let degree of selectedProduct.degrees"
+            [value]="degree"
+          >
+            {{ degree }}
+          </option>
+        </select>
+      </label>
+    </ng-container>
+  </ng-container>
 
   <label>
     <strong>Heat Zones</strong>
@@ -25,20 +100,20 @@
         <strong>{{ zone.name }}</strong>
         <br />
         <label>
-          Set Point
+          Actual Value
           <input
             type="number"
-            formControlName="setPoint"
+            formControlName="actualValue"
             required
             [defaultValue]=""
             min="0"
           />
         </label>
         <label>
-          Actual Value
+          Set Point
           <input
             type="number"
-            formControlName="actualValue"
+            formControlName="setPoint"
             required
             [defaultValue]=""
             min="0"

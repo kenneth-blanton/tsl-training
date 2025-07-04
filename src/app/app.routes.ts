@@ -35,6 +35,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'recipes/add/:recipeId',
+    component: Recipes,
+    title: 'Add Recipe',
+    canActivate: [authGuard],
+  },
+  {
     path: 'past-recipes/:line',
     component: PastRecipes,
     title: 'Past Recipes',
@@ -45,9 +51,9 @@ export const routes: Routes = [
     title: 'Thermoforming 101',
   },
   {
-    path: 'daily-entry',
+    path: 'daily-log',
     component: DailyEntry,
-    title: 'Daily Entry',
+    title: 'Daily Log',
     canActivate: [authGuard],
   },
   // {

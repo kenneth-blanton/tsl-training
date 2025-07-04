@@ -22,20 +22,20 @@
   text-decoration: none;
   border-radius: 5px;
   font-size: 1em;
-  border: 2px solid #ff0000; /* Red border */
+  border: 2px solid #3498db; /* Red border */
   border-radius: 8px;
   transition: background-color 0.2s, transform 0.1s;
 }
 
 .home-container a:hover {
-  background-color: #ffcccc; /* Light red background on hover */
+  background-color: #e3f2fd; /* Light blue background on hover */
 }
 
 .home-container a:active {
   transform: translateY(2px);
-  background-color: #ff9999; /* Active state background */
+  background-color: #bbdefb; /* Active state background */
   color: #ffffff; /* White text for active state */
-  border-color: #ff0000; /* Red border for active state */
+  border-color: #3498db; /* Red border for active state */
 }
 
 .welcome-message {

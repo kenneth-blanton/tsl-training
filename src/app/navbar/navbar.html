@@ -21,19 +21,12 @@
     (click)="$event.stopPropagation()"
   >
     <a
-      routerLink="/thermoforming101"
+      routerLink="/daily-log"
       routerLinkActive="active"
-      aria-label="Thermoforming 101"
+      aria-label="Daily Log"
       (click)="closeDrawer()"
-      >📘 101</a
-    >
-    <a
-      routerLink="/sops"
-      routerLinkActive="active"
-      aria-label="SOPs"
-      (click)="closeDrawer()"
-      >📋 SOPs</a
-    >
+      >📅 Daily Log
+    </a>
     <a
       routerLink="/recipes"
       routerLinkActive="active"
@@ -48,13 +41,22 @@
       (click)="closeDrawer()"
       >📤 Upload</a
     > -->
+
     <a
-      routerLink="/daily-entry"
+      routerLink="/thermoforming101"
       routerLinkActive="active"
-      aria-label="Daily Entry"
+      aria-label="Thermoforming 101"
       (click)="closeDrawer()"
-      >📅 Daily Entry</a
+      >📘 101</a
     >
+    <a
+      routerLink="/sops"
+      routerLinkActive="active"
+      aria-label="SOPs"
+      (click)="closeDrawer()"
+      >📋 SOPs</a
+    >
+
     <!-- Conditionally show user info or a login link -->
     <ng-container *ngIf="user$ | async as user; else showLogin">
       <!-- This block shows when the user is logged in -->

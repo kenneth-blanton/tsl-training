@@ -1,5 +1,9 @@
 <h2>Recipes for {{ (recipes$ | async)?.[0]?.line }}</h2>
 
+<a class="back-button" aria-label="Back to Recipes" routerLink="/recipes"
+  >Back</a
+>
+
 <p *ngIf="!(recipes$ | async)">Loading...</p>
 <p *ngIf="(recipes$ | async)?.length === 0">No recipes found for this line.</p>
 
@@ -20,16 +24,18 @@
       <label>
         <strong>Heat Zones</strong>
         <div class="heat-zones-display">
-          <div *ngFor="let zone of recipe.heatZones" class="zone-fields">
+          <div *ngFor="let zone of recipe.heatZones" class="zone-item">
             <strong>{{ zone.name }}</strong>
-            <label>
-              Set Point
-              <input type="number" [value]="zone.setPoint" disabled />
-            </label>
-            <label>
-              Actual Value
-              <input type="number" [value]="zone.actualValue" disabled />
-            </label>
+            <div class="zone-fields">
+              <label>
+                Actual Value
+                <input type="number" [value]="zone.actualValue" disabled />
+              </label>
+              <label>
+                Set Point
+                <input type="number" [value]="zone.setPoint" disabled />
+              </label>
+            </div>
           </div>
         </div>
       </label>
@@ -54,5 +60,6 @@
         <input type="number" [value]="recipe.scrapAmount" disabled />
       </label>
     </div>
+    <a routerLink="/recipes/add/{{ recipe.id }}">Clone</a>
   </details>
 </div>

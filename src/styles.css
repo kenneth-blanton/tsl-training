@@ -49,6 +49,29 @@ a {
   text-decoration: none;
 }
 
+.submission-feedback {
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Success message (green) */
+.submission-feedback:not(.error) {
+  background-color: #dff0d8;
+  color: #3c763d;
+  border-color: #d6e9c6;
+}
+
+/* Error message (red) */
+.submission-feedback.error {
+  background-color: #f2dede;
+  color: #a94442;
+  border-color: #ebccd1;
+}
+
 @media (max-width: 600px) {
   .nav-links.active {
     transform: translateX(0);
