@@ -49,6 +49,7 @@ export const routes: Routes = [
     path: 'thermoforming101',
     component: Thermoforming101,
     title: 'Thermoforming 101',
+    canActivate: [authGuard],
   },
   {
     path: 'daily-log',

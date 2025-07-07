@@ -26,6 +26,7 @@
   background: rgba(255, 255, 255, 0.15);
 }
 main {
+  margin-top: 3em;
   padding-bottom: 3.5rem; /* space for nav */
 }
 

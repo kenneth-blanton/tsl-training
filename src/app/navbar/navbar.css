@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px; /* Set your navbar height */
+  height: 100px; /* Set your navbar height */
   z-index: 1000;
   background: #fff; /* Or your preferred color */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -11,6 +11,16 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+.logo {
+  height: 100px;
+  width: auto;
+  transition: opacity 0.2s ease;
+}
+
+.logo:hover {
+  opacity: 0.8;
 }
 
 .spacer {
@@ -85,6 +95,12 @@
 }
 
 @media (max-width: 600px) {
+  .navbar {
+    height: 60px;
+  }
+  .logo {
+    height: 60px;
+  }
   .hamburger {
     display: block;
   }
