@@ -4,12 +4,21 @@
     <!-- Hero Section -->
     <section class="hero-section" role="banner">
       <h1 class="hero-title">TF Operators</h1>
-      <p class="hero-tagline">Digitizing & Educating Thermoforming Manufacturing Operations</p>
-      <p class="hero-description">
-        Transform your production floor with a modern digital platform that replaces paper-based workflows 
-        while empowering operators through comprehensive training and education.
+      <p class="hero-tagline">
+        Digitizing & Educating Thermoforming Manufacturing Operations
       </p>
-      <button class="cta-button" (click)="onHeroButtonClick()" aria-label="Access TF Operators Platform">Access Platform</button>
+      <p class="hero-description">
+        Transform your production floor with a modern digital platform that
+        replaces paper-based workflows while empowering operators through
+        comprehensive training and education.
+      </p>
+      <button
+        class="cta-button"
+        (click)="onDemoButtonClick()"
+        aria-label="Request Access to TF Operators Platform"
+      >
+        Request Access
+      </button>
     </section>
 
     <!-- Problem & Solution Section -->
@@ -42,84 +51,162 @@
     <section class="features-section" role="main">
       <h2>Comprehensive Manufacturing & Education Platform</h2>
       <div class="features-grid" role="list">
-        <div class="feature-card" role="listitem" (click)="onFeatureCardClick('Recipe Management')">
+        <div class="feature-card" role="listitem">
           <div class="feature-icon" aria-hidden="true">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-              <path d="M8 7h8"/>
-              <path d="M8 11h8"/>
-              <path d="M8 15h6"/>
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path
+                d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+              />
+              <path d="M8 7h8" />
+              <path d="M8 11h8" />
+              <path d="M8 15h6" />
             </svg>
           </div>
           <h3>Recipe Management</h3>
-          <p>Digitize and standardize production recipes with easy access and version control. Reduce setup time by 75% and eliminate paper-based errors.</p>
+          <p>
+            Digitize and standardize production recipes with easy access and
+            version control. Reduce setup time by 75% and eliminate paper-based
+            errors.
+          </p>
         </div>
-        <div class="feature-card" role="listitem" (click)="onFeatureCardClick('Daily Operations Logging')">
+        <div class="feature-card" role="listitem">
           <div class="feature-icon" aria-hidden="true">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-              <line x1="16" y1="2" x2="16" y2="6"/>
-              <line x1="8" y1="2" x2="8" y2="6"/>
-              <line x1="3" y1="10" x2="21" y2="10"/>
-              <path d="M8 14h.01"/>
-              <path d="M12 14h.01"/>
-              <path d="M16 14h.01"/>
-              <path d="M8 18h.01"/>
-              <path d="M12 18h.01"/>
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+              <path d="M8 14h.01" />
+              <path d="M12 14h.01" />
+              <path d="M16 14h.01" />
+              <path d="M8 18h.01" />
+              <path d="M12 18h.01" />
             </svg>
           </div>
           <h3>Daily Operations Logging</h3>
-          <p>Streamline daily production logs with structured data collection and tracking. Capture 100% of production data with zero paper waste.</p>
+          <p>
+            Streamline daily production logs with structured data collection and
+            tracking. Capture 100% of production data with zero paper waste.
+          </p>
         </div>
-        <div class="feature-card" role="listitem" (click)="onFeatureCardClick('Educational Training Materials')">
+        <div class="feature-card" role="listitem">
           <div class="feature-icon" aria-hidden="true">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-              <path d="M6 8h2"/>
-              <path d="M6 12h2"/>
-              <path d="M16 8h2"/>
-              <path d="M16 12h2"/>
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+              <path d="M6 8h2" />
+              <path d="M6 12h2" />
+              <path d="M16 8h2" />
+              <path d="M16 12h2" />
             </svg>
           </div>
           <h3>Educational Training Materials</h3>
-          <p>Access comprehensive training resources and standard operating procedures. Accelerate new operator training by 60% with structured learning paths.</p>
+          <p>
+            Access comprehensive training resources and standard operating
+            procedures. Accelerate new operator training by 60% with structured
+            learning paths.
+          </p>
         </div>
-        <div class="feature-card" role="listitem" (click)="onFeatureCardClick('Thermoforming 101')">
+        <div class="feature-card" role="listitem">
           <div class="feature-icon" aria-hidden="true">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+              <path d="M6 12v5c3 3 9 3 12 0v-5" />
             </svg>
           </div>
           <h3>Thermoforming 101</h3>
-          <p>Learn fundamentals and best practices through our integrated learning center. Master thermoforming principles with interactive modules and assessments.</p>
+          <p>
+            Learn fundamentals and best practices through our integrated
+            learning center. Master thermoforming principles with interactive
+            modules and assessments.
+          </p>
         </div>
-        <div class="feature-card" role="listitem" (click)="onFeatureCardClick('Process Standardization')">
+        <div class="feature-card" role="listitem">
           <div class="feature-icon" aria-hidden="true">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="3"/>
-              <path d="M12 1v6m0 6v6"/>
-              <path d="M21 12h-6m-6 0H3"/>
-              <path d="M21 9h-6m-6 0H3"/>
-              <path d="M21 15h-6m-6 0H3"/>
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="3" />
+              <path d="M12 1v6m0 6v6" />
+              <path d="M21 12h-6m-6 0H3" />
+              <path d="M21 9h-6m-6 0H3" />
+              <path d="M21 15h-6m-6 0H3" />
             </svg>
           </div>
           <h3>Process Standardization</h3>
-          <p>Ensure consistent operations across multiple production lines and shifts. Achieve 95% process consistency and reduce quality variations.</p>
+          <p>
+            Ensure consistent operations across multiple production lines and
+            shifts. Achieve 95% process consistency and reduce quality
+            variations.
+          </p>
         </div>
-        <div class="feature-card" role="listitem" (click)="onFeatureCardClick('Knowledge Sharing')">
+        <div class="feature-card" role="listitem">
           <div class="feature-icon" aria-hidden="true">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
             </svg>
           </div>
           <h3>Knowledge Sharing</h3>
-          <p>Facilitate communication and learning between operators and teams. Improve shift handoffs by 80% and reduce knowledge silos.</p>
+          <p>
+            Facilitate communication and learning between operators and teams.
+            Improve shift handoffs by 80% and reduce knowledge silos.
+          </p>
         </div>
       </div>
     </section>
@@ -131,22 +218,34 @@
         <div class="benefit-item">
           <div class="benefit-metric">75%</div>
           <h4>Faster Recipe Setup</h4>
-          <p>Reduce production setup time from hours to minutes with digital recipe management and standardized procedures.</p>
+          <p>
+            Reduce production setup time from hours to minutes with digital
+            recipe management and standardized procedures.
+          </p>
         </div>
         <div class="benefit-item">
           <div class="benefit-metric">100%</div>
           <h4>Paperless Production</h4>
-          <p>Eliminate paper-based logs and forms, ensuring complete data capture and reducing environmental impact.</p>
+          <p>
+            Eliminate paper-based logs and forms, ensuring complete data capture
+            and reducing environmental impact.
+          </p>
         </div>
         <div class="benefit-item">
           <div class="benefit-metric">60%</div>
           <h4>Accelerated Training</h4>
-          <p>New operators reach proficiency faster with structured learning paths and interactive educational content.</p>
+          <p>
+            New operators reach proficiency faster with structured learning
+            paths and interactive educational content.
+          </p>
         </div>
         <div class="benefit-item">
           <div class="benefit-metric">95%</div>
           <h4>Process Consistency</h4>
-          <p>Achieve uniform operations across all production lines and shifts with standardized digital workflows.</p>
+          <p>
+            Achieve uniform operations across all production lines and shifts
+            with standardized digital workflows.
+          </p>
         </div>
       </div>
     </section>
@@ -155,38 +254,77 @@
     <section class="cta-section">
       <div class="cta-content">
         <h2>Ready to Transform Your Manufacturing Operations?</h2>
-        <p>Join leading thermoforming manufacturers who have already digitized their production processes and enhanced operator training.</p>
+        <p>
+          Join leading thermoforming manufacturers who have already digitized
+          their production processes and enhanced operator training.
+        </p>
         <div class="cta-buttons">
-          <button class="cta-button primary" (click)="onDemoButtonClick()">Request Demo</button>
-          <button class="cta-button secondary" (click)="onSignInButtonClick()">Sign In</button>
+          <button class="cta-button primary" (click)="onDemoButtonClick()">
+            Request Access
+          </button>
+          <button class="cta-button secondary" (click)="openLoginModal()">
+            Sign In
+          </button>
         </div>
       </div>
     </section>
 
     <!-- Demo Request Modal -->
-    <div class="demo-modal" *ngIf="showDemo" role="dialog" aria-labelledby="demo-modal-title" aria-modal="true">
+    <div
+      class="demo-modal"
+      *ngIf="showDemo"
+      role="dialog"
+      aria-labelledby="demo-modal-title"
+      aria-modal="true"
+    >
       <div class="demo-modal-content">
         <div class="demo-modal-header">
           <h3 id="demo-modal-title">Request a Demo</h3>
-          <button class="close-button" (click)="onDemoModalClose()" aria-label="Close demo request modal">&times;</button>
+          <button
+            class="close-button"
+            (click)="onDemoModalClose()"
+            aria-label="Close demo request modal"
+          >
+            &times;
+          </button>
         </div>
         <div class="demo-form">
           <form [formGroup]="demoForm" (ngSubmit)="requestDemo()">
             <div class="form-group">
               <label for="company">Company Name</label>
-              <input id="company" type="text" formControlName="company" placeholder="Your Company Name">
+              <input
+                id="company"
+                type="text"
+                formControlName="company"
+                placeholder="Your Company Name"
+              />
             </div>
             <div class="form-group">
               <label for="name">Your Name</label>
-              <input id="name" type="text" formControlName="name" placeholder="Full Name">
+              <input
+                id="name"
+                type="text"
+                formControlName="name"
+                placeholder="Full Name"
+              />
             </div>
             <div class="form-group">
               <label for="email">Email Address</label>
-              <input id="email" type="email" formControlName="email" placeholder="you@company.com">
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                placeholder="you@company.com"
+              />
             </div>
             <div class="form-group">
               <label for="phone">Phone Number</label>
-              <input id="phone" type="tel" formControlName="phone" placeholder="(555) 123-4567">
+              <input
+                id="phone"
+                type="tel"
+                formControlName="phone"
+                placeholder="(555) 123-4567"
+              />
             </div>
             <div class="form-group">
               <label for="productionLines">Number of Production Lines</label>
@@ -200,22 +338,22 @@
             </div>
             <div class="form-group">
               <label for="message">Tell us about your current challenges</label>
-              <textarea id="message" formControlName="message" rows="4" placeholder="What manufacturing challenges are you looking to solve?"></textarea>
+              <textarea
+                id="message"
+                formControlName="message"
+                rows="4"
+                placeholder="What manufacturing challenges are you looking to solve?"
+              ></textarea>
             </div>
-            <button type="submit" class="submit-button" [disabled]="demoForm.invalid">Request Demo</button>
+            <button
+              type="submit"
+              class="submit-button"
+              [disabled]="demoForm.invalid"
+            >
+              Request Demo
+            </button>
           </form>
         </div>
-      </div>
-    </div>
-
-    <!-- Login Modal/Section -->
-    <div class="login-modal" *ngIf="showLogin">
-      <div class="login-modal-content">
-        <div class="login-modal-header">
-          <h3>Access TF Operators Platform</h3>
-          <button class="close-button" (click)="onLoginModalClose()" aria-label="Close login modal">&times;</button>
-        </div>
-        <app-login-component></app-login-component>
       </div>
     </div>
   </div>

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, NgModule } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
-import { map } from 'rxjs/internal/operators/map';
+import { ModalService } from '../services/modal.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { User } from '@angular/fire/auth';
 
@@ -15,6 +15,7 @@ import { User } from '@angular/fire/auth';
 export class Navbar {
   drawerOpen = false;
   private authService = inject(AuthService);
+  private modalService = inject(ModalService);
 
   user$: Observable<User | null> = this.authService.user$;
 
@@ -29,5 +30,10 @@ export class Navbar {
   async logout() {
     this.closeDrawer();
     await this.authService.signOut();
+  }
+
+  openLoginModal() {
+    this.closeDrawer();
+    this.modalService.openLoginModal();
   }
 }

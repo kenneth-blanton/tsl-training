@@ -3,7 +3,6 @@ import { Home } from './home/home';
 import { Thermoforming101 } from './thermoforming101/thermoforming101';
 import { Dashboard } from './dashboard/dashboard';
 import { Sops } from './sops/sops';
-import { LogUploader } from './log-uploader/log-uploader';
 import { DailyEntry } from './daily-entry/daily-entry';
 import { authGuard } from './auth/auth.guard';
 import { Recipes } from './recipes/recipes';
@@ -22,12 +21,6 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   { path: 'sops', component: Sops, title: 'SOPs' },
-  {
-    path: 'log-uploader',
-    component: LogUploader,
-    title: 'Log Uploader',
-    canActivate: [authGuard],
-  },
   {
     path: 'recipes',
     component: Recipes,

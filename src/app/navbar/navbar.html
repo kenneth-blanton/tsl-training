@@ -65,9 +65,9 @@
 
     <ng-template #showLogin>
       <!-- This block shows when the user is logged out -->
-      <a routerLink="/login" class="nav-link-button" (click)="closeDrawer()"
-        >Sign In</a
-      >
+      <button class="nav-link-button" (click)="openLoginModal()">
+        Sign In
+      </button>
     </ng-template>
   </div>
   <div class="backdrop" *ngIf="drawerOpen" (click)="closeDrawer()"></div>

@@ -15,6 +15,6 @@ export const authGuard = () => {
         router.navigate(['/signin']);
         return false;
       }
-    })
+    }),
   );
 };

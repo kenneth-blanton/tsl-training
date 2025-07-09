@@ -1,16 +1,15 @@
-<h2>Recipes for {{ (recipes$ | async)?.[0]?.line }}</h2>
+<h2>Recipes for {{ recipes()?.[0]?.line }}</h2>
 
 <a class="back-button" aria-label="Back to Recipes" routerLink="/recipes"
   >Back</a
 >
 
-<p *ngIf="!(recipes$ | async)">Loading...</p>
-<p *ngIf="(recipes$ | async)?.length === 0">No recipes found for this line.</p>
+<p *ngIf="recipes().length === 0">No recipes found for this line.</p>
 
 <div class="recipes-list">
-  <details *ngFor="let recipe of recipes$ | async" class="recipe-item">
+  <details *ngFor="let recipe of recipes()" class="recipe-item">
     <summary>
-      <span class="product-name">{{ recipe.productName }}</span>
+      <span class="product-name">{{ getProductName(recipe.productName)}}</span>
       <span class="timestamp"
         >{{ recipe.createdAt.toDate() | date:'short' }}</span
       >

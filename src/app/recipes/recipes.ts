@@ -18,11 +18,11 @@ import {
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
 import { firstValueFrom, Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-recipes',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './recipes.html',
   styleUrl: './recipes.css',
 })
@@ -128,17 +128,55 @@ export class Recipes implements OnInit {
 
     if (docSnap.exists()) {
       const recipeData = docSnap.data();
+      
+      // Get list of form control names to safely patch only existing fields
+      const formControls = Object.keys(this.newRecipeForm.controls);
+      
+      // Create object with only the fields that exist in the form
+      const dataToPatch: any = {};
+      
+      formControls.forEach(controlName => {
+        if (controlName === 'heatZones') {
+          // Skip heatZones - will be handled separately after line is set
+          return;
+        }
+        
+        if (recipeData.hasOwnProperty(controlName)) {
+          // Convert Firestore Timestamp to regular value if needed
+          const value = recipeData[controlName];
+          if (value && typeof value === 'object' && value.toDate) {
+            // Skip timestamp fields for cloning
+            return;
+          }
+          dataToPatch[controlName] = value;
+        }
+      });
 
-      // Create a copy of the data to avoid modifying the original object
-      const dataToPatch = { ...recipeData };
-
-      // Exclude fields you don't want to carry over, like production counts
+      // Exclude fields you don't want to carry over for cloning
       delete dataToPatch['piecesMade'];
       delete dataToPatch['scrapAmount'];
+      delete dataToPatch['createdBy'];
+      delete dataToPatch['createdAt'];
 
-      // Patch the form with the remaining data.
-      // The `line` value change will trigger `setHeatZonesForLine`.
+      // Patch the form with the safe data
       this.newRecipeForm.patchValue(dataToPatch);
+      
+      // Handle heatZones separately after line is set
+      if (recipeData['heatZones'] && Array.isArray(recipeData['heatZones'])) {
+        // Wait for line change to set up heat zones, then patch the values
+        setTimeout(() => {
+          const heatZonesArray = this.heatZonesFormArray;
+          recipeData['heatZones'].forEach((zoneData: any, index: number) => {
+            if (heatZonesArray.at(index)) {
+              heatZonesArray.at(index).patchValue({
+                name: zoneData.name,
+                setPoint: zoneData.setPoint,
+                actualValue: zoneData.actualValue
+              });
+            }
+          });
+        }, 100);
+      }
     } else {
       this.errorMessage = 'Recipe not found.';
       console.error('No document found with ID:', recipeId);

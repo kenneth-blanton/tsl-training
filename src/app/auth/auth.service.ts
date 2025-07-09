@@ -7,12 +7,14 @@ import {
   User,
 } from '@angular/fire/auth';
 import { Observable } from 'rxjs/internal/Observable';
+import { ModalService } from '../services/modal.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private auth = inject(Auth);
+  private modalService = inject(ModalService);
 
   user$: Observable<User | null> = authState(this.auth);
 
@@ -21,8 +23,9 @@ export class AuthService {
       const credential = await signInWithEmailAndPassword(
         this.auth,
         email,
-        password
+        password,
       );
+      this.modalService.closeLoginModal();
       return { success: true, user: credential.user };
     } catch (error: any) {
       return { success: false, error: this.getErrorMessage(error.code) };

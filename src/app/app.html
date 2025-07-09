@@ -2,3 +2,20 @@
 <main>
   <router-outlet></router-outlet>
 </main>
+
+<!-- Login Modal/Section -->
+<div class="login-modal" *ngIf="showLogin()">
+  <div class="login-modal-content">
+    <div class="login-modal-header">
+      <h3>Access TF Operators Platform</h3>
+      <button
+        class="close-button"
+        (click)="onLoginModalClose()"
+        aria-label="Close login modal"
+      >
+        &times;
+      </button>
+    </div>
+    <app-login-component></app-login-component>
+  </div>
+</div>

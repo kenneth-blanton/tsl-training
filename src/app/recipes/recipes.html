@@ -157,7 +157,7 @@
 <div class="past-recipes">
   <ul>
     <li *ngFor="let line of lines">
-      <a href="past-recipes/{{ line }}">{{ line }}</a>
+      <a [routerLink]="['/past-recipes', line]">{{ line }}</a>
     </li>
   </ul>
 </div>
