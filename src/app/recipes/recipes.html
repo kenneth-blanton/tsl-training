@@ -9,7 +9,9 @@
     <strong>Line</strong>
     <select formControlName="line">
       <option value="" disabled selected required>Select a line</option>
-      <option *ngFor="let line of lines" [value]="line">{{ line }}</option>
+      <option *ngFor="let line of lines()" [value]="line.name">
+        {{ line.name }}
+      </option>
     </select>
   </label>
 
@@ -17,7 +19,7 @@
     <strong>Product Name</strong>
     <select formControlName="productName">
       <option value="" disabled selected required>Select a product</option>
-      <option *ngFor="let product of products$ | async" [value]="product.id">
+      <option *ngFor="let product of products()" [value]="product.id">
         {{ product.name }}
       </option>
     </select>
@@ -93,11 +95,11 @@
     <strong>Heat Zones</strong>
     <div formArrayName="heatZones">
       <div
-        *ngFor="let zone of this.heatZoneConfigs[this.newRecipeForm.get('line')!.value]; let i = index"
+        *ngFor="let zone of heatZoneConfigs()[newRecipeForm.get('line')!.value]; let i = index"
         [formGroupName]="i"
         class="zone-fields"
       >
-        <strong>{{ zone.name }}</strong>
+        <strong>{{ zone }}</strong>
         <br />
         <label>
           Actual Value
@@ -132,6 +134,22 @@
     <strong>Mold Cycle Time</strong>
     <input type="number" formControlName="moldCycleTime" min="0" required />
   </label>
+  <!-- Vacuum forming fields (F4 only) -->
+  <ng-container *ngIf="newRecipeForm.get('line')?.value === 'F4'">
+    <label>
+      <strong>Mold Vent Delay Timer</strong>
+      <input
+        type="number"
+        formControlName="moldVentDelayTimer"
+        min="0"
+        required
+      />
+    </label>
+    <label>
+      <strong>Air Eject Timer</strong>
+      <input type="number" formControlName="airEjectTimer" min="0" required />
+    </label>
+  </ng-container>
   <label>
     <strong>Pieces Made</strong>
     <input type="number" formControlName="piecesMade" min="0" required />
@@ -140,6 +158,50 @@
     <strong>Scrap Amount</strong>
     <input type="number" formControlName="scrapAmount" min="0" required />
   </label>
+
+  <!-- Notes Section -->
+  <div class="notes-section">
+    <h3>Notes (Optional)</h3>
+    <div formArrayName="notes">
+      <ng-container
+        *ngFor="let note of notesFormArray.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <div class="note-item">
+          <div class="note-input-group">
+            <textarea
+              id="note-{{ i }}"
+              formControlName="text"
+              rows="3"
+              placeholder="Enter your note here..."
+              class="note-textarea"
+            ></textarea>
+            <div class="image-upload">
+              <label for="images-{{ i }}">Add Image</label>
+              <input
+                id="images-{{ i }}"
+                type="file"
+                multiple
+                (change)="onFileSelect($event, i)"
+                accept="image/*"
+              />
+            </div>
+            <button
+              type="button"
+              class="remove-note-btn"
+              (click)="removeNote(i)"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <button type="button" class="add-note-btn" (click)="addNote()">
+      Add Note
+    </button>
+  </div>
 
   <!-- Display success message here -->
   <div *ngIf="successMessage" class="submission-feedback">
@@ -156,8 +218,8 @@
 <h2>Past Recipes</h2>
 <div class="past-recipes">
   <ul>
-    <li *ngFor="let line of lines">
-      <a [routerLink]="['/past-recipes', line]">{{ line }}</a>
+    <li *ngFor="let line of lines()">
+      <a [routerLink]="['/past-recipes', line.name]">{{ line.name }}</a>
     </li>
   </ul>
 </div>

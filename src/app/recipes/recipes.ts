@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, computed } from '@angular/core';
 import {
   Firestore,
   Timestamp,
@@ -8,6 +8,12 @@ import {
   getDoc,
   collectionData,
 } from '@angular/fire/firestore';
+import {
+  Storage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from '@angular/fire/storage';
 import {
   FormBuilder,
   FormGroup,
@@ -19,6 +25,14 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
 import { firstValueFrom, Observable } from 'rxjs';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+
+// Define an interface for recipe notes
+interface Note {
+  text: string;
+  timestamp: Timestamp;
+  imageUrls?: { url: string; path: string }[];
+}
 
 @Component({
   selector: 'app-recipes',
@@ -28,62 +42,37 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 })
 export class Recipes implements OnInit {
   private firestore = inject(Firestore);
+  private storage = inject(Storage);
   private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
 
   newRecipeForm: FormGroup;
-  lines: string[] = ['F1', 'F2', 'F3', 'F4'];
-  products$: Observable<any[]>;
+  lines: any;
+  products: any;
   user$ = this.authService.user$;
-  heatZoneConfigs: { [line: string]: { name: string }[] } = {
-    F1: [
-      { name: 'Top Main' },
-      { name: 'Near Side Rail' },
-      { name: 'Far Side Rail' },
-    ],
-    F2: [
-      { name: 'Top Main' },
-      { name: 'Front Radd' },
-      { name: 'Bottom Front' },
-      { name: 'Bottom Infeed' },
-      { name: 'Near Side Rail' },
-      { name: 'Far Side Rail' },
-    ],
-    F3: [
-      { name: 'Top Front' },
-      { name: 'Top Zone 1' },
-      { name: 'Top Zone 2' },
-      { name: 'Top Zone 3' },
-      { name: 'Top Zone 4' },
-      { name: 'Top Zone 5' },
-      { name: 'Near Side Rail' },
-      { name: 'Far Side Rail' },
-    ],
-    F4: [
-      { name: 'Top Front' },
-      { name: 'Top Main Front' },
-      { name: 'Top Main Middle' },
-      { name: 'Top Main Infeed' },
-      { name: 'Bottom Main Front' },
-      { name: 'Bottom Main Middle' },
-      { name: 'Bottom Main Infeed' },
-      { name: 'Near Side Rail' },
-      { name: 'Far Side Rail' },
-    ],
-  };
+  heatZoneConfigs = computed(() => {
+    const configs: { [line: string]: { name: string }[] } = {};
+    this.lines().forEach((line: any) => {
+      if (line.heatZones) {
+        configs[line.name] = line.heatZones;
+      }
+    });
+    return configs;
+  });
   successMessage: string = '';
   errorMessage: string = '';
-  products: any[] = [];
   selectedProduct: any | null = null;
   submitted = false;
 
   constructor(private fb: FormBuilder) {
     const productsCollection = collection(this.firestore, 'products');
-    this.products$ = collectionData(productsCollection, { idField: 'id' });
-    // Store products locally to easily find the selected one
-    this.products$.subscribe((products) => {
-      this.products = products;
+    const productsObservable = collectionData(productsCollection, {
+      idField: 'id',
     });
+    this.products = toSignal(productsObservable, { initialValue: [] });
+    const lineCollection = collection(this.firestore, 'lines');
+    const lineObservable = collectionData(lineCollection, { idField: 'id' });
+    this.lines = toSignal(lineObservable, { initialValue: [] });
 
     this.newRecipeForm = this.fb.group({
       line: ['', Validators.required],
@@ -100,11 +89,17 @@ export class Recipes implements OnInit {
       scrapAmount: [null, Validators.required],
       indexLength: [null, Validators.required],
       heatZones: this.fb.array([]),
+      // Vacuum forming fields (F4 only)
+      moldVentDelayTimer: [null],
+      airEjectTimer: [null],
+      // Notes array
+      notes: this.fb.array([]),
     });
 
     // Listen for line changes
     this.newRecipeForm.get('line')!.valueChanges.subscribe((line) => {
       this.setHeatZonesForLine(line);
+      this.setVacuumFormingFieldsForLine(line);
     });
 
     // Listen for product changes to update dependent fields
@@ -128,19 +123,19 @@ export class Recipes implements OnInit {
 
     if (docSnap.exists()) {
       const recipeData = docSnap.data();
-      
+
       // Get list of form control names to safely patch only existing fields
       const formControls = Object.keys(this.newRecipeForm.controls);
-      
+
       // Create object with only the fields that exist in the form
       const dataToPatch: any = {};
-      
-      formControls.forEach(controlName => {
+
+      formControls.forEach((controlName) => {
         if (controlName === 'heatZones') {
           // Skip heatZones - will be handled separately after line is set
           return;
         }
-        
+
         if (recipeData.hasOwnProperty(controlName)) {
           // Convert Firestore Timestamp to regular value if needed
           const value = recipeData[controlName];
@@ -160,7 +155,7 @@ export class Recipes implements OnInit {
 
       // Patch the form with the safe data
       this.newRecipeForm.patchValue(dataToPatch);
-      
+
       // Handle heatZones separately after line is set
       if (recipeData['heatZones'] && Array.isArray(recipeData['heatZones'])) {
         // Wait for line change to set up heat zones, then patch the values
@@ -171,7 +166,7 @@ export class Recipes implements OnInit {
               heatZonesArray.at(index).patchValue({
                 name: zoneData.name,
                 setPoint: zoneData.setPoint,
-                actualValue: zoneData.actualValue
+                actualValue: zoneData.actualValue,
               });
             }
           });
@@ -185,7 +180,7 @@ export class Recipes implements OnInit {
 
   updateFormForProduct(productId: string): void {
     this.selectedProduct =
-      this.products.find((p) => p.id === productId) || null;
+      this.products().find((p: { id: string }) => p.id === productId) || null;
     const dependentFields = ['degrees', 'length', 'mil', 'width', 'sides'];
 
     dependentFields.forEach((fieldName) => {
@@ -217,20 +212,70 @@ export class Recipes implements OnInit {
     return this.newRecipeForm.get('heatZones') as FormArray;
   }
 
+  get notesFormArray() {
+    return this.newRecipeForm.get('notes') as FormArray;
+  }
+
   // Dynamically set heat zones based on the selected line
   setHeatZonesForLine(line: string) {
-    const zones = this.heatZoneConfigs[line] || [];
+    const zones = this.heatZoneConfigs()[line] || [];
     this.heatZonesFormArray.clear(); // Remove previous controls
 
     zones.forEach((zone) => {
       this.heatZonesFormArray.push(
         this.fb.group({
-          name: [zone.name, Validators.required],
+          name: [zone, Validators.required],
           setPoint: [null, Validators.required],
           actualValue: [null, Validators.required],
         })
       );
     });
+  }
+
+  // Set vacuum forming field requirements based on selected line
+  setVacuumFormingFieldsForLine(line: string) {
+    const moldVentControl = this.newRecipeForm.get('moldVentDelayTimer');
+    const airEjectControl = this.newRecipeForm.get('airEjectTimer');
+
+    if (line === 'F4') {
+      // F4 requires vacuum forming fields
+      moldVentControl?.setValidators([Validators.required]);
+      airEjectControl?.setValidators([Validators.required]);
+    } else {
+      // Other lines don't need vacuum forming fields
+      moldVentControl?.clearValidators();
+      airEjectControl?.clearValidators();
+      moldVentControl?.setValue(null);
+      airEjectControl?.setValue(null);
+    }
+
+    // Update validity after changing validators
+    moldVentControl?.updateValueAndValidity();
+    airEjectControl?.updateValueAndValidity();
+  }
+
+  // Add a new note to the form array
+  addNote() {
+    const noteGroup = this.fb.group({
+      text: ['', Validators.required],
+      images: [null], // For new image uploads
+    });
+    this.notesFormArray.push(noteGroup);
+  }
+
+  // Remove a note from the form array
+  removeNote(index: number) {
+    if (this.notesFormArray.length > 0) {
+      this.notesFormArray.removeAt(index);
+    }
+  }
+
+  // Handle file selection for note images
+  onFileSelect(event: Event, noteIndex: number) {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      this.notesFormArray.at(noteIndex).get('images')?.setValue(input.files);
+    }
   }
 
   async addRecipe() {
@@ -255,8 +300,37 @@ export class Recipes implements OnInit {
     }
 
     try {
+      // Process notes with image uploads
+      const processedNotes: Note[] = [];
+      if (formValue.notes && formValue.notes.length > 0) {
+        for (const note of formValue.notes) {
+          if (!note.text || note.text.trim() === '') continue;
+
+          let imageUrls: { url: string; path: string }[] = [];
+          if (note.images && note.images.length > 0) {
+            const uploadPromises = Array.from(note.images as FileList).map(
+              async (file: File) => {
+                const filePath = `recipe-notes/${user.uid}/${Date.now()}_${file.name}`;
+                const storageRef = ref(this.storage, filePath);
+                await uploadBytes(storageRef, file);
+                const url = await getDownloadURL(storageRef);
+                return { url, path: filePath };
+              }
+            );
+            imageUrls = await Promise.all(uploadPromises);
+          }
+
+          processedNotes.push({
+            text: note.text,
+            timestamp: Timestamp.now(),
+            ...(imageUrls.length > 0 && { imageUrls: imageUrls }),
+          });
+        }
+      }
+
       const recipeData = {
         ...formValue,
+        notes: processedNotes,
         createdBy: user.uid,
         createdAt: Timestamp.now(),
       };
@@ -264,8 +338,9 @@ export class Recipes implements OnInit {
       this.successMessage = 'Recipe added successfully!';
       this.newRecipeForm.reset();
       this.submitted = false; // Reset submitted state on success
-      // Optionally, reset heat zones to empty or default
+      // Clear form arrays
       (this.newRecipeForm.get('heatZones') as FormArray).clear();
+      (this.newRecipeForm.get('notes') as FormArray).clear();
     } catch (error) {
       this.errorMessage = 'Failed to add recipe. Please try again.';
       setTimeout(() => (this.errorMessage = ''), 3000);

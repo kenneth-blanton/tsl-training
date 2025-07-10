@@ -17,7 +17,11 @@
     <div class="recipe-body">
       <label>
         <strong>Product Name</strong>
-        <input type="text" [value]="recipe.productName" disabled />
+        <input
+          type="text"
+          [value]="getProductName(recipe.productName)"
+          disabled
+        />
       </label>
 
       <label>
@@ -59,6 +63,6 @@
         <input type="number" [value]="recipe.scrapAmount" disabled />
       </label>
     </div>
-    <a routerLink="/recipes/add/{{ recipe.id }}">Clone</a>
+    <a routerLink="/recipes/add/{{ recipe.id }}" class="clone-button">Clone</a>
   </details>
 </div>
