@@ -1,368 +1,566 @@
-<ng-container *ngIf="!(user$ | async); else loggedIn">
-  <!-- Landing page for logged-out users -->
-  <div class="landing-page">
-    <!-- Hero Section -->
-    <section class="hero-section" role="banner">
-      <h1 class="hero-title">TF Operators</h1>
-      <p class="hero-tagline">
-        Digitizing & Educating Thermoforming Manufacturing Operations
-      </p>
-      <p class="hero-description">
-        Transform your production floor with a modern digital platform that
-        replaces paper-based workflows while empowering operators through
-        comprehensive training and education.
-      </p>
-      <button
-        class="cta-button"
-        (click)="onDemoButtonClick()"
-        aria-label="Request Access to TF Operators Platform"
-      >
-        Request Access
-      </button>
-    </section>
+<!-- Show loading state while auth is initializing -->
+<div *ngIf="isLoading(); else authResolved" class="auth-loading">
+  <app-loading size="large" text="Loading..."></app-loading>
+</div>
 
-    <!-- Problem & Solution Section -->
-    <section class="problem-solution-section">
-      <div class="problem-solution-grid">
-        <div class="problem-card">
-          <h3>The Challenge</h3>
-          <ul>
-            <li>Outdated paper-based systems</li>
-            <li>Inefficient data collection</li>
-            <li>Lack of process standardization</li>
-            <li>Limited knowledge sharing between shifts</li>
-            <li>Difficulty accessing training materials</li>
-          </ul>
+<ng-template #authResolved>
+  <ng-container *ngIf="!isAuthenticated(); else loggedIn">
+    <!-- Landing page for logged-out users -->
+    <div class="landing-page">
+      <!-- Hero Section -->
+      <section class="hero-section" role="banner">
+        <div class="hero-background">
+          <div class="hero-gradient"></div>
+          <div class="hero-shapes">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+            <div class="floating-shape shape-4"></div>
+          </div>
         </div>
-        <div class="solution-card">
-          <h3>Our Solution</h3>
-          <ul>
-            <li>Modern digital interface</li>
-            <li>Real-time data management</li>
-            <li>Standardized operations across lines</li>
-            <li>Enhanced shift communication</li>
-            <li>Integrated learning resources</li>
-          </ul>
-        </div>
-      </div>
-    </section>
 
-    <!-- Key Features Section -->
-    <section class="features-section" role="main">
-      <h2>Comprehensive Manufacturing & Education Platform</h2>
-      <div class="features-grid" role="list">
-        <div class="feature-card" role="listitem">
-          <div class="feature-icon" aria-hidden="true">
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-              <path
-                d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
-              />
-              <path d="M8 7h8" />
-              <path d="M8 11h8" />
-              <path d="M8 15h6" />
-            </svg>
-          </div>
-          <h3>Recipe Management</h3>
-          <p>
-            Digitize and standardize production recipes with easy access and
-            version control. Reduce setup time by 75% and eliminate paper-based
-            errors.
-          </p>
-        </div>
-        <div class="feature-card" role="listitem">
-          <div class="feature-icon" aria-hidden="true">
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="3" y1="10" x2="21" y2="10" />
-              <path d="M8 14h.01" />
-              <path d="M12 14h.01" />
-              <path d="M16 14h.01" />
-              <path d="M8 18h.01" />
-              <path d="M12 18h.01" />
-            </svg>
-          </div>
-          <h3>Daily Operations Logging</h3>
-          <p>
-            Streamline daily production logs with structured data collection and
-            tracking. Capture 100% of production data with zero paper waste.
-          </p>
-        </div>
-        <div class="feature-card" role="listitem">
-          <div class="feature-icon" aria-hidden="true">
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-              <path d="M6 8h2" />
-              <path d="M6 12h2" />
-              <path d="M16 8h2" />
-              <path d="M16 12h2" />
-            </svg>
-          </div>
-          <h3>Educational Training Materials</h3>
-          <p>
-            Access comprehensive training resources and standard operating
-            procedures. Accelerate new operator training by 60% with structured
-            learning paths.
-          </p>
-        </div>
-        <div class="feature-card" role="listitem">
-          <div class="feature-icon" aria-hidden="true">
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-              <path d="M6 12v5c3 3 9 3 12 0v-5" />
-            </svg>
-          </div>
-          <h3>Thermoforming 101</h3>
-          <p>
-            Learn fundamentals and best practices through our integrated
-            learning center. Master thermoforming principles with interactive
-            modules and assessments.
-          </p>
-        </div>
-        <div class="feature-card" role="listitem">
-          <div class="feature-icon" aria-hidden="true">
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="12" cy="12" r="3" />
-              <path d="M12 1v6m0 6v6" />
-              <path d="M21 12h-6m-6 0H3" />
-              <path d="M21 9h-6m-6 0H3" />
-              <path d="M21 15h-6m-6 0H3" />
-            </svg>
-          </div>
-          <h3>Process Standardization</h3>
-          <p>
-            Ensure consistent operations across multiple production lines and
-            shifts. Achieve 95% process consistency and reduce quality
-            variations.
-          </p>
-        </div>
-        <div class="feature-card" role="listitem">
-          <div class="feature-icon" aria-hidden="true">
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
-          </div>
-          <h3>Knowledge Sharing</h3>
-          <p>
-            Facilitate communication and learning between operators and teams.
-            Improve shift handoffs by 80% and reduce knowledge silos.
-          </p>
-        </div>
-      </div>
-    </section>
+        <div class="hero-container">
+          <div class="hero-content">
+            <h1 class="hero-title">
+              <span class="title-main">TF Operators</span>
+              <span class="title-highlight">Digital Manufacturing</span>
+            </h1>
 
-    <!-- Benefits Section -->
-    <section class="benefits-section">
-      <h2>Measurable Impact on Your Operations</h2>
-      <div class="benefits-grid">
-        <div class="benefit-item">
-          <div class="benefit-metric">75%</div>
-          <h4>Faster Recipe Setup</h4>
-          <p>
-            Reduce production setup time from hours to minutes with digital
-            recipe management and standardized procedures.
-          </p>
-        </div>
-        <div class="benefit-item">
-          <div class="benefit-metric">100%</div>
-          <h4>Paperless Production</h4>
-          <p>
-            Eliminate paper-based logs and forms, ensuring complete data capture
-            and reducing environmental impact.
-          </p>
-        </div>
-        <div class="benefit-item">
-          <div class="benefit-metric">60%</div>
-          <h4>Accelerated Training</h4>
-          <p>
-            New operators reach proficiency faster with structured learning
-            paths and interactive educational content.
-          </p>
-        </div>
-        <div class="benefit-item">
-          <div class="benefit-metric">95%</div>
-          <h4>Process Consistency</h4>
-          <p>
-            Achieve uniform operations across all production lines and shifts
-            with standardized digital workflows.
-          </p>
-        </div>
-      </div>
-    </section>
+            <p class="hero-tagline">
+              Transform Your Thermoforming Operations with
+              <span class="tagline-highlight">Smart Digital Solutions</span>
+            </p>
 
-    <!-- Call to Action Section -->
-    <section class="cta-section">
-      <div class="cta-content">
-        <h2>Ready to Transform Your Manufacturing Operations?</h2>
-        <p>
-          Join leading thermoforming manufacturers who have already digitized
-          their production processes and enhanced operator training.
-        </p>
-        <div class="cta-buttons">
-          <button class="cta-button primary" (click)="onDemoButtonClick()">
-            Request Access
-          </button>
-          <button class="cta-button secondary" (click)="openLoginModal()">
-            Sign In
-          </button>
-        </div>
-      </div>
-    </section>
+            <p class="hero-description">
+              Eliminate paper-based workflows, accelerate operator training, and
+              standardize processes across your production floor with our
+              comprehensive digital platform designed specifically for
+              thermoforming manufacturers.
+            </p>
 
-    <!-- Demo Request Modal -->
-    <div
-      class="demo-modal"
-      *ngIf="showDemo"
-      role="dialog"
-      aria-labelledby="demo-modal-title"
-      aria-modal="true"
-    >
-      <div class="demo-modal-content">
-        <div class="demo-modal-header">
-          <h3 id="demo-modal-title">Request a Demo</h3>
-          <button
-            class="close-button"
-            (click)="onDemoModalClose()"
-            aria-label="Close demo request modal"
-          >
-            &times;
-          </button>
+            <div class="hero-actions">
+              <button
+                class="cta-button primary"
+                (click)="onDemoButtonClick()"
+                aria-label="Request Access to TF Operators Platform"
+              >
+                <span class="button-icon">🚀</span>
+                <span class="button-text">Request Access</span>
+              </button>
+              <button
+                class="cta-button secondary"
+                (click)="openLoginModal()"
+                aria-label="Sign in to existing account"
+              >
+                <span class="button-text">Sign In</span>
+                <span class="button-arrow">→</span>
+              </button>
+            </div>
+
+            <div class="hero-trust">
+              <p class="trust-text">Trusted by leading manufacturers</p>
+              <div class="trust-indicators">
+                <div class="trust-metric">
+                  <span class="metric-icon">🏭</span>
+                  <span class="metric-text">50+ Production Lines</span>
+                </div>
+                <div class="trust-metric">
+                  <span class="metric-icon">👥</span>
+                  <span class="metric-text">200+ Operators Trained</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="visual-container">
+              <div class="visual-card card-1">
+                <div class="card-icon">📋</div>
+                <div class="card-title">Digital Recipes</div>
+                <div class="card-progress">
+                  <div class="progress-bar" style="width: 85%"></div>
+                </div>
+              </div>
+              <div class="visual-card card-2">
+                <div class="card-icon">📊</div>
+                <div class="card-title">Real-time Data</div>
+                <div class="card-chart">
+                  <div class="chart-bar" style="height: 60%"></div>
+                  <div class="chart-bar" style="height: 80%"></div>
+                  <div class="chart-bar" style="height: 40%"></div>
+                  <div class="chart-bar" style="height: 90%"></div>
+                </div>
+              </div>
+              <div class="visual-card card-3">
+                <div class="card-icon">🎓</div>
+                <div class="card-title">Training Hub</div>
+                <div class="card-students">
+                  <div class="student-avatar"></div>
+                  <div class="student-avatar"></div>
+                  <div class="student-avatar"></div>
+                  <span class="student-count">+12</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="demo-form">
-          <form [formGroup]="demoForm" (ngSubmit)="requestDemo()">
-            <div class="form-group">
-              <label for="company">Company Name</label>
-              <input
-                id="company"
-                type="text"
-                formControlName="company"
-                placeholder="Your Company Name"
-              />
+
+        <div class="hero-scroll-indicator">
+          <div class="scroll-text">Discover More</div>
+          <div class="scroll-arrow">↓</div>
+        </div>
+      </section>
+
+      <!-- Problem & Solution Section -->
+      <section class="problem-solution-section">
+        <div class="section-header">
+          <h2>From Paper to Digital Excellence</h2>
+          <p>
+            See how we transform traditional manufacturing challenges into
+            modern solutions
+          </p>
+        </div>
+
+        <!-- Mobile-First: Challenge/Solution Pairs -->
+        <div class="transformation-flow">
+          <div class="transform-pair">
+            <div class="challenge-item">
+              <div class="challenge-icon">📋</div>
+              <div class="challenge-text">
+                <h4>Paper-Based Systems</h4>
+                <p>Outdated forms and manual processes</p>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="name">Your Name</label>
-              <input
-                id="name"
-                type="text"
-                formControlName="name"
-                placeholder="Full Name"
-              />
+            <div class="transform-arrow">→</div>
+            <div class="solution-item">
+              <div class="solution-icon">💻</div>
+              <div class="solution-text">
+                <h4>Digital Interface</h4>
+                <p>Modern, intuitive digital workflows</p>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input
-                id="email"
-                type="email"
-                formControlName="email"
-                placeholder="you@company.com"
-              />
+          </div>
+
+          <div class="transform-pair">
+            <div class="challenge-item">
+              <div class="challenge-icon">📊</div>
+              <div class="challenge-text">
+                <h4>Manual Data Collection</h4>
+                <p>Inefficient and error-prone logging</p>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="phone">Phone Number</label>
-              <input
-                id="phone"
-                type="tel"
-                formControlName="phone"
-                placeholder="(555) 123-4567"
-              />
+            <div class="transform-arrow">→</div>
+            <div class="solution-item">
+              <div class="solution-icon">⚡</div>
+              <div class="solution-text">
+                <h4>Real-Time Management</h4>
+                <p>Automated data capture and tracking</p>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="productionLines">Number of Production Lines</label>
-              <select id="productionLines" formControlName="productionLines">
-                <option value="">Select...</option>
-                <option value="1-2">1-2 lines</option>
-                <option value="3-5">3-5 lines</option>
-                <option value="6-10">6-10 lines</option>
-                <option value="10+">10+ lines</option>
-              </select>
+          </div>
+
+          <div class="transform-pair">
+            <div class="challenge-item">
+              <div class="challenge-icon">🔄</div>
+              <div class="challenge-text">
+                <h4>No Standardization</h4>
+                <p>Inconsistent processes across lines</p>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="message">Tell us about your current challenges</label>
-              <textarea
-                id="message"
-                formControlName="message"
-                rows="4"
-                placeholder="What manufacturing challenges are you looking to solve?"
-              ></textarea>
+            <div class="transform-arrow">→</div>
+            <div class="solution-item">
+              <div class="solution-icon">✅</div>
+              <div class="solution-text">
+                <h4>Standardized Operations</h4>
+                <p>Uniform processes across all lines</p>
+              </div>
             </div>
-            <button
-              type="submit"
-              class="submit-button"
-              [disabled]="demoForm.invalid"
-            >
-              Request Demo
+          </div>
+
+          <div class="transform-pair">
+            <div class="challenge-item">
+              <div class="challenge-icon">👥</div>
+              <div class="challenge-text">
+                <h4>Poor Communication</h4>
+                <p>Limited knowledge sharing between shifts</p>
+              </div>
+            </div>
+            <div class="transform-arrow">→</div>
+            <div class="solution-item">
+              <div class="solution-icon">🤝</div>
+              <div class="solution-text">
+                <h4>Enhanced Collaboration</h4>
+                <p>Seamless shift communication</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="transform-pair">
+            <div class="challenge-item">
+              <div class="challenge-icon">📚</div>
+              <div class="challenge-text">
+                <h4>Limited Training Access</h4>
+                <p>Difficulty accessing training materials</p>
+              </div>
+            </div>
+            <div class="transform-arrow">→</div>
+            <div class="solution-item">
+              <div class="solution-icon">🎓</div>
+              <div class="solution-text">
+                <h4>Integrated Learning</h4>
+                <p>Comprehensive training resources</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desktop: Traditional Cards (Hidden on Mobile) -->
+        <div class="desktop-problem-solution">
+          <div class="problem-solution-grid">
+            <div class="problem-card">
+              <h3>The Challenge</h3>
+              <ul>
+                <li>Outdated paper-based systems</li>
+                <li>Inefficient data collection</li>
+                <li>Lack of process standardization</li>
+                <li>Limited knowledge sharing between shifts</li>
+                <li>Difficulty accessing training materials</li>
+              </ul>
+            </div>
+            <div class="solution-card">
+              <h3>Our Solution</h3>
+              <ul>
+                <li>Modern digital interface</li>
+                <li>Real-time data management</li>
+                <li>Standardized operations across lines</li>
+                <li>Enhanced shift communication</li>
+                <li>Integrated learning resources</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Key Features Section -->
+      <section class="features-section" role="main">
+        <h2>Comprehensive Manufacturing & Education Platform</h2>
+        <div class="features-grid" role="list">
+          <div class="feature-card" role="listitem">
+            <div class="feature-icon" aria-hidden="true">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                <path
+                  d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                />
+                <path d="M8 7h8" />
+                <path d="M8 11h8" />
+                <path d="M8 15h6" />
+              </svg>
+            </div>
+            <h3>Recipe Management</h3>
+            <p>
+              Digitize and standardize production recipes with easy access and
+              version control. Reduce setup time by 75% and eliminate
+              paper-based errors.
+            </p>
+          </div>
+          <div class="feature-card" role="listitem">
+            <div class="feature-icon" aria-hidden="true">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+                <path d="M8 14h.01" />
+                <path d="M12 14h.01" />
+                <path d="M16 14h.01" />
+                <path d="M8 18h.01" />
+                <path d="M12 18h.01" />
+              </svg>
+            </div>
+            <h3>Daily Operations Logging</h3>
+            <p>
+              Streamline daily production logs with structured data collection
+              and tracking. Capture 100% of production data with zero paper
+              waste.
+            </p>
+          </div>
+          <div class="feature-card" role="listitem">
+            <div class="feature-icon" aria-hidden="true">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                <path d="M6 8h2" />
+                <path d="M6 12h2" />
+                <path d="M16 8h2" />
+                <path d="M16 12h2" />
+              </svg>
+            </div>
+            <h3>Educational Training Materials</h3>
+            <p>
+              Access comprehensive training resources and standard operating
+              procedures. Accelerate new operator training by 60% with
+              structured learning paths.
+            </p>
+          </div>
+          <div class="feature-card" role="listitem">
+            <div class="feature-icon" aria-hidden="true">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                <path d="M6 12v5c3 3 9 3 12 0v-5" />
+              </svg>
+            </div>
+            <h3>Thermoforming 101</h3>
+            <p>
+              Learn fundamentals and best practices through our integrated
+              learning center. Master thermoforming principles with interactive
+              modules and assessments.
+            </p>
+          </div>
+          <div class="feature-card" role="listitem">
+            <div class="feature-icon" aria-hidden="true">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="3" />
+                <path d="M12 1v6m0 6v6" />
+                <path d="M21 12h-6m-6 0H3" />
+                <path d="M21 9h-6m-6 0H3" />
+                <path d="M21 15h-6m-6 0H3" />
+              </svg>
+            </div>
+            <h3>Process Standardization</h3>
+            <p>
+              Ensure consistent operations across multiple production lines and
+              shifts. Achieve 95% process consistency and reduce quality
+              variations.
+            </p>
+          </div>
+          <div class="feature-card" role="listitem">
+            <div class="feature-icon" aria-hidden="true">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </div>
+            <h3>Knowledge Sharing</h3>
+            <p>
+              Facilitate communication and learning between operators and teams.
+              Improve shift handoffs by 80% and reduce knowledge silos.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Benefits Section -->
+      <section class="benefits-section">
+        <h2>Measurable Impact on Your Operations</h2>
+        <div class="benefits-grid">
+          <div class="benefit-item">
+            <div class="benefit-metric">75%</div>
+            <h4>Faster Recipe Setup</h4>
+            <p>
+              Reduce production setup time from hours to minutes with digital
+              recipe management and standardized procedures.
+            </p>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-metric">100%</div>
+            <h4>Paperless Production</h4>
+            <p>
+              Eliminate paper-based logs and forms, ensuring complete data
+              capture and reducing environmental impact.
+            </p>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-metric">60%</div>
+            <h4>Accelerated Training</h4>
+            <p>
+              New operators reach proficiency faster with structured learning
+              paths and interactive educational content.
+            </p>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-metric">95%</div>
+            <h4>Process Consistency</h4>
+            <p>
+              Achieve uniform operations across all production lines and shifts
+              with standardized digital workflows.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Call to Action Section -->
+      <section class="cta-section">
+        <div class="cta-content">
+          <h2>Ready to Transform Your Manufacturing Operations?</h2>
+          <p>
+            Join leading thermoforming manufacturers who have already digitized
+            their production processes and enhanced operator training.
+          </p>
+          <div class="cta-buttons">
+            <button class="cta-button primary" (click)="onDemoButtonClick()">
+              Request Access
             </button>
-          </form>
+            <button class="cta-button secondary" (click)="openLoginModal()">
+              Sign In
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Demo Request Modal -->
+      <div
+        class="demo-modal"
+        *ngIf="showDemo"
+        role="dialog"
+        aria-labelledby="demo-modal-title"
+        aria-modal="true"
+      >
+        <div class="demo-modal-content">
+          <div class="demo-modal-header">
+            <h3 id="demo-modal-title">Request a Demo</h3>
+            <button
+              class="close-button"
+              (click)="onDemoModalClose()"
+              aria-label="Close demo request modal"
+            >
+              &times;
+            </button>
+          </div>
+          <div class="demo-form">
+            <form [formGroup]="demoForm" (ngSubmit)="requestDemo()">
+              <div class="form-group">
+                <label for="company">Company Name</label>
+                <input
+                  id="company"
+                  type="text"
+                  formControlName="company"
+                  placeholder="Your Company Name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input
+                  id="name"
+                  type="text"
+                  formControlName="name"
+                  placeholder="Full Name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                  id="email"
+                  type="email"
+                  formControlName="email"
+                  placeholder="you@company.com"
+                />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input
+                  id="phone"
+                  type="tel"
+                  formControlName="phone"
+                  placeholder="(555) 123-4567"
+                />
+              </div>
+              <div class="form-group">
+                <label for="productionLines">Number of Production Lines</label>
+                <select id="productionLines" formControlName="productionLines">
+                  <option value="">Select...</option>
+                  <option value="1-2">1-2 lines</option>
+                  <option value="3-5">3-5 lines</option>
+                  <option value="6-10">6-10 lines</option>
+                  <option value="10+">10+ lines</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="message"
+                  >Tell us about your current challenges</label
+                >
+                <textarea
+                  id="message"
+                  formControlName="message"
+                  rows="4"
+                  placeholder="What manufacturing challenges are you looking to solve?"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="submit-button"
+                [disabled]="demoForm.invalid"
+              >
+                Request Demo
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</ng-container>
+  </ng-container>
+</ng-template>
 
 <ng-template #loggedIn>
   <!-- This container will be styled for logged-in users -->
   <div class="home-container">
-    <p class="welcome-message">Welcome back, {{ (user$ | async)?.email }}!</p>
+    <p class="welcome-message">Welcome back, {{ user()?.email }}!</p>
     <a routerLink="/recipes" routerLinkActive="active" aria-label="Recipes"
       >📖 Recipes</a
     >

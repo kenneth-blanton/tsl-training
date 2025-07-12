@@ -12,9 +12,9 @@ export const authGuard = () => {
       if (user) {
         return true;
       } else {
-        router.navigate(['/signin']);
+        router.navigate(['/']);
         return false;
       }
-    }),
+    })
   );
 };

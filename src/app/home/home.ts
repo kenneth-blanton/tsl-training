@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
 import { RouterLink } from '@angular/router';
@@ -9,10 +9,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { ModalService } from '../services/modal.service';
+import { Loading } from '../shared/loading/loading';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink, ReactiveFormsModule],
+  imports: [CommonModule, RouterLink, ReactiveFormsModule, Loading],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })
@@ -21,7 +22,11 @@ export class Home {
   formBuilder = inject(FormBuilder);
   private modalService = inject(ModalService);
 
-  user$ = this.authService.user$;
+  // Signal-based auth state
+  user = this.authService.user;
+  isLoading = this.authService.isLoading;
+  isAuthenticated = this.authService.isAuthenticated;
+  
   showDemo = false;
 
   demoForm: FormGroup = this.formBuilder.group({

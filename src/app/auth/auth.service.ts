@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal, computed } from '@angular/core';
 import {
   Auth,
   signInWithEmailAndPassword,
@@ -7,6 +7,7 @@ import {
   User,
 } from '@angular/fire/auth';
 import { Observable } from 'rxjs/internal/Observable';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ModalService } from '../services/modal.service';
 
 @Injectable({
@@ -15,8 +16,27 @@ import { ModalService } from '../services/modal.service';
 export class AuthService {
   private auth = inject(Auth);
   private modalService = inject(ModalService);
-
+  
+  // Keep Observable for backward compatibility
   user$: Observable<User | null> = authState(this.auth);
+  
+  // Signal-based authentication state with proper loading detection
+  private hasReceivedAuthState = signal(false);
+  user = toSignal(this.user$, { 
+    initialValue: undefined,
+    requireSync: false 
+  });
+  
+  // Computed auth states
+  isAuthenticated = computed(() => !!this.user());
+  isLoading = computed(() => !this.hasReceivedAuthState());
+  
+  constructor() {
+    // Track when we've received the first auth state (even if null)
+    this.user$.subscribe(() => {
+      this.hasReceivedAuthState.set(true);
+    });
+  }
 
   async signIn(email: string, password: string) {
     try {

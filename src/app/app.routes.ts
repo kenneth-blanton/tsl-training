@@ -37,6 +37,7 @@ export const routes: Routes = [
     path: 'past-recipes/:line',
     component: PastRecipes,
     title: 'Past Recipes',
+    canActivate: [authGuard],
   },
   {
     path: 'thermoforming101',

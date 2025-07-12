@@ -25,6 +25,18 @@ const angularApp = new AngularNodeAppEngine();
  */
 
 /**
+ * Redirect trailing slashes to clean URLs
+ */
+app.use((req, res, next) => {
+  if (req.path !== '/' && req.path.endsWith('/')) {
+    const cleanPath = req.path.slice(0, -1);
+    const queryString = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+    return res.redirect(301, cleanPath + queryString);
+  }
+  next();
+});
+
+/**
  * Serve static files from /browser
  */
 app.use(
