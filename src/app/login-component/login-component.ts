@@ -8,6 +8,7 @@ import {
   FormControl,
   Validators, // Import Validators
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -18,6 +19,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class LoginComponent {
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   loginForm: FormGroup;
   loginError: string | null = null;
@@ -42,7 +44,9 @@ export class LoginComponent {
       const { email, password } = this.loginForm.value;
       try {
         await this.authService.signIn(email, password);
+
         console.log(`User signed in: ${email}`);
+        this.router.navigate(['/dashboard']);
       } catch (e: any) {
         this.loginError = 'Failed to sign in. Please check your credentials.';
         console.error(e);

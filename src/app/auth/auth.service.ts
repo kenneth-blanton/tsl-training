@@ -9,6 +9,7 @@ import {
 import { Observable } from 'rxjs/internal/Observable';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ModalService } from '../services/modal.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,21 +17,22 @@ import { ModalService } from '../services/modal.service';
 export class AuthService {
   private auth = inject(Auth);
   private modalService = inject(ModalService);
-  
+  private router = inject(Router);
+
   // Keep Observable for backward compatibility
   user$: Observable<User | null> = authState(this.auth);
-  
+
   // Signal-based authentication state with proper loading detection
   private hasReceivedAuthState = signal(false);
-  user = toSignal(this.user$, { 
+  user = toSignal(this.user$, {
     initialValue: undefined,
-    requireSync: false 
+    requireSync: false,
   });
-  
+
   // Computed auth states
   isAuthenticated = computed(() => !!this.user());
   isLoading = computed(() => !this.hasReceivedAuthState());
-  
+
   constructor() {
     // Track when we've received the first auth state (even if null)
     this.user$.subscribe(() => {
@@ -43,7 +45,7 @@ export class AuthService {
       const credential = await signInWithEmailAndPassword(
         this.auth,
         email,
-        password,
+        password
       );
       this.modalService.closeLoginModal();
       return { success: true, user: credential.user };
@@ -55,6 +57,7 @@ export class AuthService {
   async signOut() {
     try {
       await signOut(this.auth);
+      this.router.navigate(['/']);
       return { success: true };
     } catch (error) {
       return { success: false, error: 'Failed to sign out' };

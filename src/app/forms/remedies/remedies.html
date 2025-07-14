@@ -1,0 +1,150 @@
+<div class="remedy-form-container">
+  <form [formGroup]="remedyForm" (ngSubmit)="submitRemedy()">
+    <!-- Title Field -->
+    <div class="form-group">
+      <label for="title">Remedy Title *</label>
+      <input 
+        type="text" 
+        id="title" 
+        formControlName="title"
+        placeholder="Brief description of the remedy"
+        class="form-control"
+        [class.error]="remedyForm.get('title')?.invalid && remedyForm.get('title')?.touched"
+      >
+      <div class="error-message" *ngIf="remedyForm.get('title')?.invalid && remedyForm.get('title')?.touched">
+        <span *ngIf="remedyForm.get('title')?.errors?.['required']">Title is required</span>
+        <span *ngIf="remedyForm.get('title')?.errors?.['minlength']">Title must be at least 3 characters</span>
+      </div>
+    </div>
+
+    <!-- Description Field -->
+    <div class="form-group">
+      <label for="description">Remedy Steps *</label>
+      <textarea 
+        id="description" 
+        formControlName="description"
+        placeholder="Detailed step-by-step instructions for this remedy"
+        rows="4"
+        class="form-control"
+        [class.error]="remedyForm.get('description')?.invalid && remedyForm.get('description')?.touched"
+      ></textarea>
+      <div class="error-message" *ngIf="remedyForm.get('description')?.invalid && remedyForm.get('description')?.touched">
+        <span *ngIf="remedyForm.get('description')?.errors?.['required']">Description is required</span>
+        <span *ngIf="remedyForm.get('description')?.errors?.['minlength']">Description must be at least 10 characters</span>
+      </div>
+    </div>
+
+    <!-- Two-column layout for effectiveness and difficulty -->
+    <div class="form-row">
+      <!-- Effectiveness Selection -->
+      <div class="form-group">
+        <label for="effectiveness">Effectiveness *</label>
+        <select 
+          id="effectiveness" 
+          formControlName="effectiveness"
+          class="form-control"
+        >
+          <option *ngFor="let option of effectivenessOptions" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Difficulty Selection -->
+      <div class="form-group">
+        <label for="difficulty">Difficulty *</label>
+        <select 
+          id="difficulty" 
+          formControlName="difficulty"
+          class="form-control"
+        >
+          <option *ngFor="let option of difficultyOptions" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Time Required Field -->
+    <div class="form-group">
+      <label for="timeRequired">Estimated Time Required *</label>
+      <input 
+        type="text" 
+        id="timeRequired" 
+        formControlName="timeRequired"
+        placeholder="e.g., 30 minutes, 2 hours, 1 day"
+        class="form-control"
+        [class.error]="remedyForm.get('timeRequired')?.invalid && remedyForm.get('timeRequired')?.touched"
+      >
+      <div class="error-message" *ngIf="remedyForm.get('timeRequired')?.invalid && remedyForm.get('timeRequired')?.touched">
+        <span *ngIf="remedyForm.get('timeRequired')?.errors?.['required']">Time estimate is required</span>
+      </div>
+    </div>
+
+    <!-- Tools Required Field -->
+    <div class="form-group">
+      <label for="toolsRequired">Tools/Materials Required</label>
+      <input 
+        type="text" 
+        id="toolsRequired" 
+        formControlName="toolsRequired"
+        placeholder="e.g., Wrench, replacement part, safety equipment"
+        class="form-control"
+      >
+      <small class="help-text">Optional: List any special tools or materials needed</small>
+    </div>
+
+    <!-- Testing Status -->
+    <div class="form-group">
+      <div class="checkbox-group">
+        <label class="checkbox-label">
+          <input 
+            type="checkbox" 
+            formControlName="tested"
+            class="checkbox-input"
+          >
+          <span class="checkbox-text">This remedy has been tested</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Success Status (only if tested) -->
+    <div class="form-group" *ngIf="remedyForm.get('tested')?.value">
+      <div class="checkbox-group">
+        <label class="checkbox-label">
+          <input 
+            type="checkbox" 
+            formControlName="successful"
+            class="checkbox-input"
+          >
+          <span class="checkbox-text">This remedy was successful</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Error Display -->
+    <div class="error-message" *ngIf="submitError">
+      {{ submitError }}
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button 
+        type="button" 
+        class="btn btn-secondary" 
+        (click)="closeModal()"
+        [disabled]="isSubmitting"
+      >
+        Cancel
+      </button>
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="remedyForm.invalid || isSubmitting"
+      >
+        <span *ngIf="isSubmitting">{{ isEditMode ? 'Updating...' : 'Creating...' }}</span>
+        <span *ngIf="!isSubmitting">{{ isEditMode ? 'Update Remedy' : 'Add Remedy' }}</span>
+      </button>
+    </div>
+  </form>
+</div>

@@ -4,7 +4,7 @@
 </div>
 
 <ng-template #authResolved>
-  <ng-container *ngIf="!isAuthenticated(); else loggedIn">
+  <ng-container>
     <!-- Landing page for logged-out users -->
     <div class="landing-page">
       <!-- Hero Section -->
@@ -555,18 +555,4 @@
       </div>
     </div>
   </ng-container>
-</ng-template>
-
-<ng-template #loggedIn>
-  <!-- This container will be styled for logged-in users -->
-  <div class="home-container">
-    <p class="welcome-message">Welcome back, {{ user()?.email }}!</p>
-    <a routerLink="/recipes" routerLinkActive="active" aria-label="Recipes"
-      >📖 Recipes</a
-    >
-    <a routerLink="/daily-log" routerLinkActive="active" aria-label="Daily Log"
-      >📅 Daily Log</a
-    >
-    <button class="sign-out-button" (click)="signOut()">Sign Out</button>
-  </div>
 </ng-template>

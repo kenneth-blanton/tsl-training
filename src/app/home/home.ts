@@ -1,7 +1,7 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
@@ -13,20 +13,26 @@ import { Loading } from '../shared/loading/loading';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink, ReactiveFormsModule, Loading],
+  imports: [CommonModule, ReactiveFormsModule, Loading],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })
-export class Home {
+export class Home implements OnInit {
   authService = inject(AuthService);
   formBuilder = inject(FormBuilder);
   private modalService = inject(ModalService);
+  private router = inject(Router);
 
   // Signal-based auth state
   user = this.authService.user;
   isLoading = this.authService.isLoading;
   isAuthenticated = this.authService.isAuthenticated;
-  
+
+  ngOnInit() {
+    if (this.user()) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
   showDemo = false;
 
   demoForm: FormGroup = this.formBuilder.group({
@@ -58,7 +64,7 @@ export class Home {
         // Here you would typically send the data to your backend
         // For now, we'll just show a success message and close the modal
         alert(
-          'Thank you for your interest! We will contact you within 24 hours to schedule your demo.',
+          'Thank you for your interest! We will contact you within 24 hours to schedule your demo.'
         );
         this.showDemo = false;
         this.demoForm.reset();

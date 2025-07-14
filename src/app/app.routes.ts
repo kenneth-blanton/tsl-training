@@ -7,6 +7,7 @@ import { DailyEntry } from './daily-entry/daily-entry';
 import { authGuard } from './auth/auth.guard';
 import { Recipes } from './recipes/recipes';
 import { PastRecipes } from './past-recipes/past-recipes';
+import { ProblemHistory } from './problem-history/problem-history';
 
 export const routes: Routes = [
   {
@@ -49,6 +50,12 @@ export const routes: Routes = [
     path: 'daily-log',
     component: DailyEntry,
     title: 'Daily Log',
+    canActivate: [authGuard],
+  },
+  {
+    path: 'problem-history',
+    component: ProblemHistory,
+    title: 'Problem History',
     canActivate: [authGuard],
   },
   // {

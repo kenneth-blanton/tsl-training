@@ -19,3 +19,37 @@
     <app-login-component></app-login-component>
   </div>
 </div>
+
+<!-- Problem Modal/Section -->
+<div class="problem-modal" *ngIf="showProblem()">
+  <div class="problem-modal-content">
+    <div class="problem-modal-header">
+      <h3>Problem Management</h3>
+      <button
+        class="close-button"
+        (click)="onProblemModalClose()"
+        aria-label="Close problem modal"
+      >
+        &times;
+      </button>
+    </div>
+    <app-problems></app-problems>
+  </div>
+</div>
+
+<!-- Remedy Modal/Section -->
+<div class="remedy-modal" *ngIf="showRemedy()">
+  <div class="remedy-modal-content">
+    <div class="remedy-modal-header">
+      <h3>Remedy Management</h3>
+      <button
+        class="close-button"
+        (click)="onRemedyModalClose()"
+        aria-label="Close remedy modal"
+      >
+        &times;
+      </button>
+    </div>
+    <app-remedies></app-remedies>
+  </div>
+</div>

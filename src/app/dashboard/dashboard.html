@@ -1,13 +1,215 @@
-<section class="dashboard">
-  <h1>Welcome to the Thermoforming Operations & Training App</h1>
-  <p>Your hub for training, SOPs, and digital log management.</p>
-  <ul class="quick-links">
-    <li><a routerLink="/thermoforming101">Thermoforming 101</a></li>
-    <li><a routerLink="/sops">Standard Operating Procedures</a></li>
-    <li><a routerLink="/log-uploader">Log Sheet Uploader</a></li>
-  </ul>
-  <div class="snapshot">
-    <h2>Recent Activity</h2>
-    <p>(This will show key metrics and recent uploads soon.)</p>
+<div class="dashboard-container">
+  <!-- Header -->
+  <div class="user-profile-container">
+    <button class="user-profile-button">🫄</button>
+    <span>{{ user()?.email }}</span>
+    <!-- <span>{{ windowWidth }}px</span> -->
+    <!-- <button class="user-profile-signout" (click)="signOut()">Sign Out</button> -->
   </div>
-</section>
+
+  <!-- Line Selection -->
+  <div class="line-status-container">
+    <div class="selectors-container">
+      <div class="selector-group">
+        <label for="line-selector">Production Line:</label>
+        <select
+          id="line-selector"
+          class="line-selector"
+          [value]="selectedLineId"
+          (change)="onLineChange($event)"
+        >
+          <option value="">All Lines</option>
+          @for (line of lines(); track line.id) {
+          <option [value]="line.id">{{ line.name }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="selector-group" *ngIf="selectedLineId">
+        <label for="product-selector">Product:</label>
+        <select
+          id="product-selector"
+          class="product-selector"
+          [value]="selectedProductId"
+          (change)="onProductChange($event)"
+        >
+          <option value="">All Products</option>
+          @for (product of getProductsForSelectedLine(); track product.id) {
+          <option [value]="product.id">{{ product.name }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="line-status-display" *ngIf="selectedLineId">
+      <div class="status-indicator">
+        <div class="status-light" [class.active]="isLineActive()" [class.inactive]="!isLineActive()"></div>
+        <div class="status-text">
+          <span class="status-label">LINE STATUS</span>
+          <span class="status-value">{{ getLineStatusText() }}</span>
+        </div>
+      </div>
+      <button
+        class="status-toggle-btn"
+        [class.btn-stop]="isLineActive()"
+        [class.btn-start]="!isLineActive()"
+        (click)="changeLineStatus()"
+        title="Toggle line status"
+      >
+        <span class="toggle-text">{{ getToggleButtonText() }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-container">
+    <progress value="70" max="100" class="progress-bar"></progress>
+    <div class="progress-text">
+      <p class="estimated-time">Time Remaining: {{ estimatedTimeRemaining }}</p>
+      <p class="quantity">{{ currentQuantity }} / {{ orderQuantity }}</p>
+    </div>
+  </div>
+
+  <!-- Problems -->
+  <div class="problem-container">
+    <div class="problem-header">
+      <h2>Problems</h2>
+      <div class="problem-action-buttons">
+        <button class="problem-history-button" (click)="problemHistory()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path
+              d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9L0 168c0 13.3 10.7 24 24 24l110.1 0c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24l0 104c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65 0-94.1c0-13.3-10.7-24-24-24z"
+            />
+          </svg>
+        </button>
+        <button class="problem-add-button" (click)="addProblem()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path
+              d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="problem-listing">
+      @if (problems().length === 0) {
+      <p class="no-problems">No active problems</p>
+      } @else {
+      <ul class="problem-list">
+        @for (problem of problems(); track problem.id) {
+        <li class="problem-item">
+          <div class="problem-item-header">
+            <h3 class="problem-title">{{ problem['title'] }}</h3>
+            <span
+              class="problem-severity"
+              [class]="'severity-' + problem['severity']"
+            >
+              {{ problem['severity'] | titlecase }}
+            </span>
+          </div>
+
+          <div class="problem-meta">
+            <span>Line: {{ getLineName(problem['lineId']) }}</span>
+            <span class="problem-product" *ngIf="problem['productId']">
+              Product: {{ getProductName(problem['productId']) }}
+            </span>
+            <span>By: {{ problem['createdByEmail'] }}</span>
+            <span>{{ problem['createdAt']?.toDate() | date:'short' }}</span>
+          </div>
+
+          <div class="problem-description">{{ problem['description'] }}</div>
+
+          <div class="problem-actions">
+            <button class="problem-edit-button" (click)="editProblem(problem)">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path
+                  d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"
+                />
+              </svg>
+              Edit
+            </button>
+            <button class="remedy-add-button" (click)="addRemedy(problem)">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"
+                />
+              </svg>
+              Add Remedy
+            </button>
+            <button
+              class="problem-resolve-button"
+              (click)="resolveProblem(problem)"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path
+                  d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"
+                />
+              </svg>
+              Resolve
+            </button>
+          </div>
+
+          <div class="remedies-section">
+            <h4 class="remedies-title">
+              Remedies ({{ getRemediesForProblem(problem.id).length }})
+            </h4>
+            @if (getRemediesForProblem(problem.id).length === 0) {
+            <p class="no-remedies">No remedies added yet</p>
+            } @else {
+            <div class="remedies-list">
+              @for (remedy of getRemediesForProblem(problem.id); track
+              remedy.id) {
+              <div class="remedy-card">
+                <div class="remedy-header">
+                  <h5 class="remedy-title">{{ remedy['title'] }}</h5>
+                  <div class="remedy-badges">
+                    <span
+                      class="remedy-effectiveness"
+                      [class]="'effectiveness-' + remedy['effectiveness']"
+                    >
+                      {{ remedy['effectiveness'] | titlecase }}
+                    </span>
+                    <span
+                      class="remedy-difficulty"
+                      [class]="'difficulty-' + remedy['difficulty']"
+                    >
+                      {{ remedy['difficulty'] | titlecase }}
+                    </span>
+                    @if (remedy['tested']) {
+                    <span
+                      class="remedy-tested"
+                      [class]="remedy['successful'] ? 'tested-success' : 'tested-failed'"
+                    >
+                      {{ remedy['successful'] ? 'Success' : 'Failed' }}
+                    </span>
+                    }
+                  </div>
+                </div>
+                <div class="remedy-meta">
+                  <span>Time: {{ remedy['timeRequired'] }}</span>
+                  @if (remedy['toolsRequired']) {
+                  <span>Tools: {{ remedy['toolsRequired'] }}</span>
+                  }
+                </div>
+                <div class="remedy-description">
+                  {{ remedy['description'] }}
+                </div>
+                <button
+                  class="remedy-edit-button"
+                  (click)="editRemedy(problem, remedy)"
+                >
+                  Edit
+                </button>
+              </div>
+              }
+            </div>
+            }
+          </div>
+        </li>
+        }
+      </ul>
+      }
+    </div>
+  </div>
+</div>

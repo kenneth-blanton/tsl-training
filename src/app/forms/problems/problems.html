@@ -1,0 +1,114 @@
+<div class="problem-form-container">
+  <form [formGroup]="problemForm" (ngSubmit)="submitProblem()">
+    <!-- Title Field -->
+    <div class="form-group">
+      <label for="title">Problem Title *</label>
+      <input 
+        type="text" 
+        id="title" 
+        formControlName="title"
+        placeholder="Brief description of the problem"
+        class="form-control"
+        [class.error]="problemForm.get('title')?.invalid && problemForm.get('title')?.touched"
+      >
+      <div class="error-message" *ngIf="problemForm.get('title')?.invalid && problemForm.get('title')?.touched">
+        <span *ngIf="problemForm.get('title')?.errors?.['required']">Title is required</span>
+        <span *ngIf="problemForm.get('title')?.errors?.['minlength']">Title must be at least 3 characters</span>
+      </div>
+    </div>
+
+    <!-- Line Selection -->
+    <div class="form-group">
+      <label for="lineId">Production Line *</label>
+      <select 
+        id="lineId" 
+        formControlName="lineId"
+        class="form-control"
+        [class.error]="problemForm.get('lineId')?.invalid && problemForm.get('lineId')?.touched"
+        (change)="onLineChange()"
+      >
+        <option value="">Select a line</option>
+        <option *ngFor="let line of lines()" [value]="line.id">{{ line['name'] }}</option>
+      </select>
+      <div class="error-message" *ngIf="problemForm.get('lineId')?.invalid && problemForm.get('lineId')?.touched">
+        <span *ngIf="problemForm.get('lineId')?.errors?.['required']">Please select a production line</span>
+      </div>
+    </div>
+
+    <!-- Product Selection -->
+    <div class="form-group">
+      <label for="productId">Product *</label>
+      <small class="help-text" *ngIf="selectedLine()">
+        Showing products available for: {{ getSelectedLineName() }}
+      </small>
+      <select 
+        id="productId" 
+        formControlName="productId"
+        class="form-control"
+        [class.error]="problemForm.get('productId')?.invalid && problemForm.get('productId')?.touched"
+      >
+        <option value="">Select a product</option>
+        <option *ngFor="let product of getProductsForSelectedLine()" [value]="product.id">{{ product['name'] }}</option>
+      </select>
+      <div class="error-message" *ngIf="problemForm.get('productId')?.invalid && problemForm.get('productId')?.touched">
+        <span *ngIf="problemForm.get('productId')?.errors?.['required']">Please select a product</span>
+      </div>
+    </div>
+
+    <!-- Severity Selection -->
+    <div class="form-group">
+      <label for="severity">Severity Level *</label>
+      <select 
+        id="severity" 
+        formControlName="severity"
+        class="form-control"
+      >
+        <option *ngFor="let option of severityOptions" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Description Field -->
+    <div class="form-group">
+      <label for="description">Problem Description *</label>
+      <textarea 
+        id="description" 
+        formControlName="description"
+        placeholder="Detailed description of the problem, including symptoms and any relevant context"
+        rows="4"
+        class="form-control"
+        [class.error]="problemForm.get('description')?.invalid && problemForm.get('description')?.touched"
+      ></textarea>
+      <div class="error-message" *ngIf="problemForm.get('description')?.invalid && problemForm.get('description')?.touched">
+        <span *ngIf="problemForm.get('description')?.errors?.['required']">Description is required</span>
+        <span *ngIf="problemForm.get('description')?.errors?.['minlength']">Description must be at least 10 characters</span>
+      </div>
+    </div>
+
+    <!-- Error Display -->
+    <div class="error-message" *ngIf="submitError">
+      {{ submitError }}
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button 
+        type="button" 
+        class="btn btn-secondary" 
+        (click)="closeModal()"
+        [disabled]="isSubmitting"
+      >
+        Cancel
+      </button>
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="problemForm.invalid || isSubmitting"
+      >
+        <span *ngIf="isSubmitting">{{ isEditMode ? 'Updating...' : 'Creating...' }}</span>
+        <span *ngIf="!isSubmitting">{{ isEditMode ? 'Update Problem' : 'Create Problem' }}</span>
+      </button>
+    </div>
+  </form>
+</div>

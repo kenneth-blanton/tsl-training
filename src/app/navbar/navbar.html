@@ -53,6 +53,14 @@
       (click)="closeDrawer()"
       >📘 101</a
     >
+    
+    <a
+      routerLink="/problem-history"
+      routerLinkActive="active"
+      aria-label="Problem History"
+      (click)="closeDrawer()"
+      >🔧 Problem History</a
+    >
 
     <!-- Conditionally show user info or a login link -->
     <ng-container *ngIf="user$ | async as user; else showLogin">
