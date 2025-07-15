@@ -53,7 +53,7 @@
       (click)="closeDrawer()"
       >📘 101</a
     >
-    
+
     <a
       routerLink="/problem-history"
       routerLinkActive="active"
@@ -66,7 +66,14 @@
     <ng-container *ngIf="user$ | async as user; else showLogin">
       <!-- This block shows when the user is logged in -->
       <div class="user-info">
-        <span class="user-email">{{ user.email }}</span>
+        <a
+          routerLink="/dashboard"
+          aria-label="Dashboard"
+          routerLinkActive="active"
+          (click)="closeDrawer()"
+          ><span class="user-email">{{ user.email }}</span></a
+        >
+
         <button class="logout-button" (click)="logout()">Logout</button>
       </div>
     </ng-container>

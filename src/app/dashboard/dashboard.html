@@ -8,61 +8,44 @@
   </div>
 
   <!-- Line Selection -->
-  <div class="line-status-container">
-    <div class="selectors-container">
-      <div class="selector-group">
-        <label for="line-selector">Production Line:</label>
-        <select
-          id="line-selector"
-          class="line-selector"
-          [value]="selectedLineId"
-          (change)="onLineChange($event)"
-        >
-          <option value="">All Lines</option>
-          @for (line of lines(); track line.id) {
-          <option [value]="line.id">{{ line.name }}</option>
-          }
-        </select>
-      </div>
-
-      <div class="selector-group" *ngIf="selectedLineId">
-        <label for="product-selector">Product:</label>
-        <select
-          id="product-selector"
-          class="product-selector"
-          [value]="selectedProductId"
-          (change)="onProductChange($event)"
-        >
-          <option value="">All Products</option>
-          @for (product of getProductsForSelectedLine(); track product.id) {
-          <option [value]="product.id">{{ product.name }}</option>
-          }
-        </select>
-      </div>
-    </div>
-
-    <div class="line-status-display" *ngIf="selectedLineId">
-      <div class="status-indicator">
-        <div class="status-light" [class.active]="isLineActive()" [class.inactive]="!isLineActive()"></div>
-        <div class="status-text">
-          <span class="status-label">LINE STATUS</span>
-          <span class="status-value">{{ getLineStatusText() }}</span>
+  <div class="line-selection-container">
+    <h2>Select Production Line</h2>
+    <div class="lines-grid">
+      @for (line of lines(); track line.id) {
+      <div class="line-card" 
+           [class.selected]="selectedLineId === line.id"
+           (click)="selectLine(line.id)">
+        <div class="line-card-header">
+          <h3>{{ line.name }}</h3>
+          <div class="line-status-indicator">
+            <div class="status-light" 
+                 [class.active]="line.status === 'active'" 
+                 [class.inactive]="line.status !== 'active'"></div>
+            <span class="status-text">{{ line.status === 'active' ? 'RUNNING' : 'STOPPED' }}</span>
+          </div>
+        </div>
+        <div class="line-timer">
+          <div class="timer-label">{{ line.status === 'active' ? 'Running for:' : 'Stopped for:' }}</div>
+          <div class="timer-display">{{ getLineTimer(line) }}</div>
+        </div>
+        <div class="line-card-actions">
+          <button
+            class="status-toggle-btn"
+            [class.btn-stop]="line.status === 'active'"
+            [class.btn-start]="line.status !== 'active'"
+            (click)="toggleLineStatus(line.id, $event)"
+            title="Toggle line status"
+          >
+            {{ line.status === 'active' ? 'Stop Line' : 'Start Line' }}
+          </button>
         </div>
       </div>
-      <button
-        class="status-toggle-btn"
-        [class.btn-stop]="isLineActive()"
-        [class.btn-start]="!isLineActive()"
-        (click)="changeLineStatus()"
-        title="Toggle line status"
-      >
-        <span class="toggle-text">{{ getToggleButtonText() }}</span>
-      </button>
+      }
     </div>
   </div>
 
   <!-- Progress -->
-  <div class="progress-container">
+  <div class="progress-container" *ngIf="selectedLineId">
     <progress value="70" max="100" class="progress-bar"></progress>
     <div class="progress-text">
       <p class="estimated-time">Time Remaining: {{ estimatedTimeRemaining }}</p>
@@ -71,7 +54,7 @@
   </div>
 
   <!-- Problems -->
-  <div class="problem-container">
+  <div class="problem-container" *ngIf="selectedLineId">
     <div class="problem-header">
       <h2>Problems</h2>
       <div class="problem-action-buttons">

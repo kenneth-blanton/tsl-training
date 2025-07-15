@@ -1,4 +1,4 @@
-import { Component, NgModule, inject } from '@angular/core';
+import { Component, NgModule, inject, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import {
@@ -25,10 +25,11 @@ import { map, switchMap, combineLatest, BehaviorSubject } from 'rxjs';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard {
+export class Dashboard implements OnDestroy {
   authService = inject(AuthService);
   firestore = inject(Firestore);
   modal = inject(ModalService);
+  private cdr = inject(ChangeDetectorRef);
   public userDetailsOpen = false;
 
   // Signal-based auth state
@@ -52,6 +53,10 @@ export class Dashboard {
   estimatedTimeRemaining: string = '2 days'; // Example value, can be dynamic
   currentQuantity: number = 50; // Example value, can be dynamic
   orderQuantity: number = 100; // Example value, can be dynamic
+  
+  // Timer properties
+  private timerInterval: any;
+  private currentTime: Date = new Date();
 
   constructor(private router: Router) {
     const lineCollection = collection(this.firestore, 'lines');
@@ -131,6 +136,22 @@ export class Dashboard {
     this.selectedLineSubject.subscribe(() => {
       this.loadLineStatus();
     });
+
+    // Start the timer to update every second
+    this.startTimer();
+  }
+
+  ngOnDestroy() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
+  }
+
+  private startTimer() {
+    this.timerInterval = setInterval(() => {
+      this.currentTime = new Date();
+      this.cdr.detectChanges(); // Force change detection
+    }, 1000);
   }
 
   addProblem() {
@@ -209,6 +230,55 @@ export class Dashboard {
     this.modal.openRemedyModal(problem, remedy);
   }
 
+  selectLine(lineId: string) {
+    this.selectedLineId = lineId;
+    this.selectedLineSubject.next(lineId);
+    
+    // Reset product selection when line changes
+    this.selectedProductId = '';
+    
+    // Load the status of the selected line
+    this.loadLineStatus();
+  }
+
+  async toggleLineStatus(lineId: string, event: Event) {
+    event.stopPropagation(); // Prevent line selection when clicking toggle button
+    
+    if (!lineId) {
+      console.error('No line ID provided');
+      return;
+    }
+
+    try {
+      // Find the current line to get its status
+      const currentLine = this.lines().find((l: any) => l.id === lineId);
+      if (!currentLine) {
+        console.error('Line not found');
+        return;
+      }
+
+      // Toggle the status
+      const newStatus = currentLine.status === 'active' ? 'inactive' : 'active';
+      
+      // Update in database
+      const lineDoc = doc(this.firestore, `lines/${lineId}`);
+      await updateDoc(lineDoc, {
+        status: newStatus,
+        statusChangedAt: serverTimestamp(),
+        statusChangedBy: this.user()?.uid || 'unknown',
+      });
+      
+      // Update local status if this is the selected line
+      if (lineId === this.selectedLineId) {
+        this.currentLineStatus = newStatus;
+      }
+      
+      console.log(`Line ${currentLine.name} status updated to: ${newStatus}`);
+    } catch (error) {
+      console.error('Error updating line status:', error);
+    }
+  }
+
   onLineChange(event: Event) {
     const target = event.target as HTMLSelectElement;
     this.selectedLineId = target.value;
@@ -280,5 +350,25 @@ export class Dashboard {
 
   isLineActive(): boolean {
     return this.currentLineStatus === 'active';
+  }
+
+  getLineTimer(line: any): string {
+    if (!line.statusChangedAt) {
+      return '0:00:00';
+    }
+
+    // Convert Firestore timestamp to Date
+    const statusChangedAt = line.statusChangedAt.toDate ? line.statusChangedAt.toDate() : new Date(line.statusChangedAt);
+    const timeDiff = this.currentTime.getTime() - statusChangedAt.getTime();
+    
+    // Convert milliseconds to hours, minutes, seconds
+    const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+    
+    // Format with leading zeros
+    const formatTime = (num: number): string => num.toString().padStart(2, '0');
+    
+    return `${hours}:${formatTime(minutes)}:${formatTime(seconds)}`;
   }
 }
